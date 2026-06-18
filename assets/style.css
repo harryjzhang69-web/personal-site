@@ -781,3 +781,345 @@ button:focus-visible {
     border-color: var(--line);
   }
 }
+
+/* ============================================
+ * v1.1 — Indie Maker Style (Marc Lou inspired)
+ * 新增：Hero badges、Hero meta、Product 卡片增强、
+ *      Rule 右侧标签、About CV 时间线、Primary connect
+ * ============================================ */
+
+/* ===== Hero Badges ===== */
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  background: var(--bg-1);
+  color: var(--text-1);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge svg {
+  color: var(--accent);
+}
+.badge-live {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: transparent;
+}
+
+/* ===== Hero Meta (数据炫耀) ===== */
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.meta-item {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.meta-item strong {
+  font-family: var(--sans);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1;
+}
+.meta-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  text-transform: uppercase;
+}
+.meta-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--line);
+}
+@media (max-width: 540px) {
+  .hero-meta { gap: 16px; }
+  .meta-divider { display: none; }
+}
+
+/* ===== 按钮里的 SVG 图标 ===== */
+.btn svg {
+  flex-shrink: 0;
+}
+
+/* 小号按钮 */
+.btn-sm {
+  height: 32px;
+  padding: 0 13px;
+  font-size: 13px;
+}
+
+/* ===== Rule (FIG · 01) 右侧标签 ===== */
+.rule-tag-r {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ===== Product 卡片（替代 project） ===== */
+.product {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg-2);
+  margin-bottom: 16px;
+  transition: all 0.18s ease;
+  position: relative;
+}
+.product:hover {
+  border-color: var(--line-strong);
+}
+.product.featured {
+  border-color: var(--accent-soft);
+  background: linear-gradient(180deg, var(--bg-2), var(--accent-soft) 220%);
+}
+.product.featured:hover {
+  border-color: var(--accent);
+}
+.product.muted { opacity: 0.55; }
+
+.product-glyph {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.product.featured .product-glyph {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.product-body { min-width: 0; }
+
+.product-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.product-head h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--text);
+}
+
+.product-tagline {
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.product-desc {
+  font-size: 14.5px;
+  color: var(--text-1);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.product-desc a {
+  color: var(--text);
+  border-bottom-color: var(--line-strong);
+}
+.product-desc strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.product-desc em {
+  font-style: italic;
+  color: var(--text);
+}
+
+.product-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  flex-wrap: wrap;
+}
+
+.product-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.product-tags li {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-1);
+}
+
+.product-price {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.005em;
+}
+.product-price.muted {
+  color: var(--text-2);
+}
+
+.product-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.product-eta {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 540px) {
+  .product { grid-template-columns: 48px 1fr; gap: 16px; padding: 18px; }
+  .product-glyph { width: 44px; height: 44px; font-size: 20px; }
+}
+
+/* ===== About CV 时间线 ===== */
+.about-lead {
+  font-size: 17.5px !important;
+  line-height: 1.75;
+  color: var(--text) !important;
+  margin-bottom: 28px !important;
+  font-weight: 400;
+}
+.about-lead strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.about-cv {
+  margin: 28px 0;
+  padding: 20px 22px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cv-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  font-size: 14.5px;
+}
+.cv-year {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.cv-desc {
+  color: var(--text-1);
+}
+.cv-desc strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .cv-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* ===== Connect Primary（公众号高亮卡） ===== */
+.connect-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  position: relative;
+}
+.connect-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+.connect-primary {
+  background: linear-gradient(180deg, var(--accent-soft), transparent);
+  border-color: var(--accent-soft) !important;
+  position: relative;
+  overflow: hidden;
+}
+.connect-primary::before {
+  content: "主推";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+.connect-primary:hover {
+  border-color: var(--accent) !important;
+  background: linear-gradient(180deg, var(--accent-soft), var(--bg-1));
+}
+
+/* About quote 微调 */
+.about-quote em {
+  font-style: italic;
+  color: var(--accent);
+}
+

@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Harry — 产品经理，正在独立构建 AI 产品。" />
+  <meta name="description" content="Harry — 清华硕士 · 前腾讯产品经理。独立做 AI 产品，让你下载即用。" />
   <meta name="theme-color" content="#08090a" />
-  <title>Harry — 一个正在造东西的产品经理</title>
+  <title>Harry — AI 产品手艺人</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;700;900&display=swap"
     rel="stylesheet"
   />
   <link rel="stylesheet" href="./assets/style.css" />
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Harry — 一个正在造东西的产品经理" />
-  <meta property="og:description" content="独立构建 AI 产品。把过程公开记录。" />
+  <meta property="og:title" content="Harry — AI 产品手艺人" />
+  <meta property="og:description" content="清华硕士 · 前腾讯 PM。独立做 AI 产品。" />
   <meta property="og:type" content="website" />
 </head>
 <body>
@@ -31,9 +31,8 @@
         <span class="logo-text">Harry</span>
       </a>
       <div class="topnav-links">
-        <a href="#now">现在</a>
-        <a href="#building">在做</a>
-        <a href="#writing">写作</a>
+        <a href="#products">产品</a>
+        <a href="#process">在做</a>
         <a href="#about">关于</a>
         <a href="#connect">联系</a>
       </div>
@@ -48,31 +47,61 @@
 
     <!-- ============= HERO ============= -->
     <header class="hero">
-      <div class="hero-eyebrow">
-        <span class="dot dot-pulse"></span>
-        <span>正在造 · 玄镜</span>
-        <span class="eyebrow-divider">/</span>
-        <span class="muted">2026</span>
+      <div class="hero-badges">
+        <span class="badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg>
+          清华硕士
+        </span>
+        <span class="badge">前腾讯产品经理</span>
+        <span class="badge badge-live">
+          <span class="dot dot-pulse"></span>
+          独立开发中
+        </span>
       </div>
 
       <h1 class="hero-title">
-        我是产品经理，<br/>
-        正在<span class="hl">独立构建</span><br/>
-        我自己的 AI 产品。
+        我做<span class="hl">下载即用</span>的<br/>
+        AI 小产品。
       </h1>
 
       <p class="hero-sub">
-        曾在<a href="#about">腾讯游戏</a>做产品，参与过 PUBGM 等大型项目。
-        现在好奇一件事——
-        一个产品经理，加上 AI，能造出什么。
+        Hi，我是 <strong>Harry</strong>。
+        清华硕士毕业，前腾讯产品经理（PUBGM 等亿级项目）。
+        现在做一件更小、更慢、更纯粹的事——
+        <strong>把 AI 包装成普通人下载就能用的小工具</strong>。
+      </p>
+
+      <p class="hero-sub secondary">
+        前期免费试用，后续付费解锁深度功能。
+        没有套路、不卖焦虑、不搞订阅陷阱。
       </p>
 
       <div class="hero-cta">
-        <a href="#building" class="btn">
-          <span>看我在做的</span>
+        <a href="#products" class="btn">
+          <span>看我的产品</span>
           <span class="btn-arrow">→</span>
         </a>
-        <a href="#connect" class="btn btn-ghost">加个微信</a>
+        <a href="#connect" class="btn btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          关注公众号
+        </a>
+      </div>
+
+      <div class="hero-meta">
+        <span class="meta-item">
+          <strong>1</strong>
+          <span class="meta-label">个产品上线</span>
+        </span>
+        <span class="meta-divider"></span>
+        <span class="meta-item">
+          <strong>2+</strong>
+          <span class="meta-label">个产品开发中</span>
+        </span>
+        <span class="meta-divider"></span>
+        <span class="meta-item">
+          <strong>0 → 1</strong>
+          <span class="meta-label">真实公开过程</span>
+        </span>
       </div>
     </header>
 
@@ -80,27 +109,125 @@
     <div class="rule">
       <span class="rule-tag">FIG · 01</span>
       <span class="rule-line"></span>
+      <span class="rule-tag-r">产品</span>
     </div>
 
-    <!-- ============= NOW ============= -->
-    <section class="block" id="now">
+    <!-- ============= PRODUCTS ============= -->
+    <section class="block" id="products">
       <div class="block-head">
         <span class="block-num">01</span>
-        <h2>现在</h2>
+        <h2>产品</h2>
         <span class="block-meta">更新于 <time>2026.06.18</time></span>
+      </div>
+
+      <p class="block-intro">
+        我的目标是每两个月做一个产品。
+        小而美、有用、能让你下载之后真的用起来。
+      </p>
+
+      <!-- 玄镜（开发中，主力） -->
+      <article class="product featured">
+        <div class="product-glyph">玄</div>
+        <div class="product-body">
+          <div class="product-head">
+            <h3>玄镜 · XuanJing</h3>
+            <span class="status status-dev">开发中</span>
+          </div>
+          <p class="product-tagline">不是算命，是给你一面思考自己的镜子。</p>
+          <p class="product-desc">
+            融合<strong>易经卦象 + 八字命盘 + 双人合盘</strong>的 AI 陪伴小程序。
+            克制、不卖恐惧、不算未来——只做你思考的镜子。
+            最大差异化：<em>先共情、再分析、最后把方向引回到你自己</em>。
+          </p>
+          <div class="product-meta">
+            <ul class="product-tags">
+              <li>微信小程序</li>
+              <li>易经 · 八字</li>
+              <li>AI 对话</li>
+            </ul>
+            <span class="product-price">前期免费 · 后续 ¥9.9 起</span>
+          </div>
+          <div class="product-cta">
+            <a href="#connect" class="btn btn-sm">
+              <span>预约首批体验</span>
+              <span class="btn-arrow">→</span>
+            </a>
+            <span class="product-eta">预计 2026 年 7 月</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 团队AI工具集 -->
+      <article class="product">
+        <div class="product-glyph">A</div>
+        <div class="product-body">
+          <div class="product-head">
+            <h3>团队 AI 工具集</h3>
+            <span class="status status-live">已上线</span>
+          </div>
+          <p class="product-tagline">在大公司里搞自动化的小爽文。</p>
+          <p class="product-desc">
+            为团队搭建的 MCP + 多模型 AI 工具链：
+            自然语言查报表、周报自动生成、跨源情报关联。
+            <strong>50+ 同事日常在用</strong>。
+          </p>
+          <div class="product-meta">
+            <ul class="product-tags">
+              <li>MCP · RAG</li>
+              <li>多 Agent</li>
+              <li>内部产品</li>
+            </ul>
+            <span class="product-price muted">内部使用</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Coming soon -->
+      <article class="product muted">
+        <div class="product-glyph">·</div>
+        <div class="product-body">
+          <div class="product-head">
+            <h3>下一个产品</h3>
+            <span class="status">规划中</span>
+          </div>
+          <p class="product-desc">
+            还在想，但已经有几个想法在脑子里转。
+            <a href="#connect">关注我的公众号</a>，第一时间知道。
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============= PROCESS（在做） ============= -->
+    <div class="rule">
+      <span class="rule-tag">FIG · 02</span>
+      <span class="rule-line"></span>
+      <span class="rule-tag-r">在做</span>
+    </div>
+
+    <section class="block" id="process">
+      <div class="block-head">
+        <span class="block-num">02</span>
+        <h2>在做</h2>
       </div>
 
       <ul class="now-list">
         <li class="now-item">
           <span class="now-marker active"></span>
           <div class="now-text">
-            <strong>玄镜（XuanJing）</strong>开发中——一个把易经、八字做成现代 AI 陪伴体验的小程序
+            <strong>玄镜小程序</strong> 收尾中——前端 UI 调优 + AI 对话调试
           </div>
         </li>
         <li class="now-item">
           <span class="now-marker active"></span>
           <div class="now-text">
-            转型 AI 产品经理 · 30 天系统学习 <span class="muted">· Day 27 / 30</span>
+            <strong>公众号「AI 产品手艺人」</strong> 内容筹备中——写转型 AI PM 的真实记录
+          </div>
+        </li>
+        <li class="now-item">
+          <span class="now-marker active"></span>
+          <div class="now-text">
+            <strong>小红书 @清华学长 harry</strong> 启动中——把"独立开发"过程做成内容
           </div>
         </li>
         <li class="now-item">
@@ -112,205 +239,119 @@
       </ul>
     </section>
 
-    <div class="rule">
-      <span class="rule-tag">FIG · 02</span>
-      <span class="rule-line"></span>
-    </div>
-
-    <!-- ============= BUILDING ============= -->
-    <section class="block" id="building">
-      <div class="block-head">
-        <span class="block-num">02</span>
-        <h2>在做</h2>
-      </div>
-
-      <article class="project featured">
-        <div class="project-glyph">玄</div>
-        <div class="project-body">
-          <div class="project-head">
-            <h3>玄镜 · XuanJing</h3>
-            <span class="status status-dev">开发中</span>
-          </div>
-          <p class="project-tagline">不是算命，是给你一面思考自己的镜子。</p>
-          <p class="project-desc">
-            一个融合易经卦象、八字命盘和双人合盘的 AI 陪伴小程序。
-            克制、不卖恐惧、不算未来——只做你的"思考镜子"。
-            产品最大的差异化：先共情，再分析，最后把方向引回到你自己身上。
-          </p>
-          <ul class="project-tags">
-            <li>微信小程序</li>
-            <li>Python · FastAPI</li>
-            <li>DeepSeek · GLM</li>
-            <li>独立开发</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="project">
-        <div class="project-glyph">A</div>
-        <div class="project-body">
-          <div class="project-head">
-            <h3>团队 AI 工具集</h3>
-            <span class="status status-live">已上线</span>
-          </div>
-          <p class="project-tagline">在大公司里搞自动化的小爽文。</p>
-          <p class="project-desc">
-            为团队搭建的 MCP + 多模型 AI 工具链：自然语言查报表、周报自动生成、
-            跨源情报关联。50+ 同事日常在用。
-          </p>
-          <ul class="project-tags">
-            <li>MCP · RAG</li>
-            <li>多 Agent</li>
-            <li>内部产品</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="project muted">
-        <div class="project-glyph">·</div>
-        <div class="project-body">
-          <div class="project-head">
-            <h3>下一个</h3>
-            <span class="status">规划中</span>
-          </div>
-          <p class="project-desc">
-            一些安静的、长期的事。会先在<a href="#writing">写作</a>里透露。
-          </p>
-        </div>
-      </article>
-    </section>
-
+    <!-- ============= ABOUT ============= -->
     <div class="rule">
       <span class="rule-tag">FIG · 03</span>
       <span class="rule-line"></span>
+      <span class="rule-tag-r">关于</span>
     </div>
 
-    <!-- ============= WRITING ============= -->
-    <section class="block" id="writing">
-      <div class="block-head">
-        <span class="block-num">03</span>
-        <h2>写作</h2>
-        <span class="block-meta">同步公众号 · 小红书 · 知乎</span>
-      </div>
-
-      <p class="block-intro">
-        我相信公开记录是最好的复利。
-        关于 AI 产品、独立开发、转型路上的踩坑——
-        都会写成文章，慢慢长。
-      </p>
-
-      <ul class="writing-list">
-        <li class="writing-item">
-          <a href="#" class="writing-link">
-            <span class="writing-num">01</span>
-            <span class="writing-title">大厂产品经理决定一边在岗、一边独立造产品</span>
-            <span class="writing-date">即将</span>
-          </a>
-        </li>
-        <li class="writing-item">
-          <a href="#" class="writing-link">
-            <span class="writing-num">02</span>
-            <span class="writing-title">我用 AI 给前任算了一卦，看到结果时有点想哭</span>
-            <span class="writing-date">即将</span>
-          </a>
-        </li>
-        <li class="writing-item">
-          <a href="#" class="writing-link">
-            <span class="writing-num">03</span>
-            <span class="writing-title">Token 经济学：做一个 AI 副业到底要花多少钱</span>
-            <span class="writing-date">即将</span>
-          </a>
-        </li>
-        <li class="writing-item">
-          <a href="#" class="writing-link">
-            <span class="writing-num">04</span>
-            <span class="writing-title">公开转型 AI PM 的 30 天</span>
-            <span class="writing-date">即将</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <div class="rule">
-      <span class="rule-tag">FIG · 04</span>
-      <span class="rule-line"></span>
-    </div>
-
-    <!-- ============= ABOUT ============= -->
     <section class="block" id="about">
       <div class="block-head">
-        <span class="block-num">04</span>
+        <span class="block-num">03</span>
         <h2>关于</h2>
       </div>
 
       <div class="about-prose">
-        <p>
-          我从游戏行业起步——在腾讯做产品，
-          参与过 PUBG Mobile 等几亿用户量级的大型项目。
+        <p class="about-lead">
+          我叫 <strong>Harry</strong>，一个清华毕业、做过大厂产品的人，
+          现在想做"自己的产品"。
         </p>
+
+        <div class="about-cv">
+          <div class="cv-item">
+            <span class="cv-year">2025</span>
+            <span class="cv-desc"><strong>清华大学硕士毕业</strong></span>
+          </div>
+          <div class="cv-item">
+            <span class="cv-year">2025—2026</span>
+            <span class="cv-desc"><strong>腾讯游戏 · 产品经理</strong> · 参与 PUBGM 等亿级项目</span>
+          </div>
+          <div class="cv-item">
+            <span class="cv-year">2026—</span>
+            <span class="cv-desc"><strong>独立开发 AI 产品</strong> · 在岗探索 · 公开试错</span>
+          </div>
+        </div>
+
         <p>
-          学会了一件事：
-          <strong>当用户是几千万、信息是混乱的、决策是有真实代价的</strong>——
-          那种状态下的产品判断，是任何"方法论"都教不会的。
+          在大厂学到了一件事——
+          <strong>能解决真问题的产品，比花哨的方法论值钱 100 倍</strong>。
         </p>
+
         <p>
-          现在，我对一个更小、更慢的问题着迷——
+          但大厂也有大厂的局限：决策慢、用户离自己远、产品归属感弱。
+          所以我想试一件更纯粹的事——
         </p>
+
         <p class="about-quote">
-          一个产品经理，<br/>
-          以 AI 为副驾驶，<br/>
-          能造出什么？
+          一个人 + AI，<br/>
+          能做出多少<em>"普通人想用"</em>的产品？
         </p>
+
         <p>
+          产品有三个原则：
+          <strong>有用、有趣、不贵</strong>。
           这个网站，是这场实验的公开日志。
         </p>
       </div>
     </section>
 
+    <!-- ============= CONNECT ============= -->
     <div class="rule">
-      <span class="rule-tag">FIG · 05</span>
+      <span class="rule-tag">FIG · 04</span>
       <span class="rule-line"></span>
+      <span class="rule-tag-r">联系</span>
     </div>
 
-    <!-- ============= CONNECT ============= -->
     <section class="block" id="connect">
       <div class="block-head">
-        <span class="block-num">05</span>
+        <span class="block-num">04</span>
         <h2>联系</h2>
       </div>
 
+      <p class="block-intro">
+        最稳的方式是<strong>关注公众号「AI 产品手艺人」</strong>——
+        每个新产品上线、每篇深度文章，都会第一时间发那里。
+      </p>
+
       <div class="connect-grid">
+        <a class="connect-card connect-primary" href="#">
+          <span class="connect-icon">📰</span>
+          <span class="connect-label">公众号</span>
+          <span class="connect-value">AI 产品手艺人</span>
+          <span class="connect-hint">主阵地 · 必关注</span>
+        </a>
+
+        <div class="connect-card">
+          <span class="connect-icon">📓</span>
+          <span class="connect-label">小红书</span>
+          <span class="connect-value">@清华学长 harry</span>
+          <span class="connect-hint">创业日常 · 短内容</span>
+        </div>
+
+        <div class="connect-card">
+          <span class="connect-icon">💬</span>
+          <span class="connect-label">微信</span>
+          <span class="connect-value">jialin_69</span>
+          <span class="connect-hint">备注「网站来」必通过</span>
+        </div>
+
         <a class="connect-card" href="mailto:2385069706@qq.com">
+          <span class="connect-icon">✉️</span>
           <span class="connect-label">邮箱</span>
           <span class="connect-value">2385069706@qq.com</span>
         </a>
 
-        <div class="connect-card">
-          <span class="connect-label">微信</span>
-          <span class="connect-value">jialin_69</span>
-          <span class="connect-hint">备注「网站来」我必通过</span>
-        </div>
-
-        <div class="connect-card">
-          <span class="connect-label">公众号</span>
-          <span class="connect-value">AI 产品手艺人</span>
-          <span class="connect-hint">关注获取最新动态</span>
-        </div>
-
-        <div class="connect-card">
-          <span class="connect-label">小红书</span>
-          <span class="connect-value">@清华学长 harry</span>
-          <span class="connect-hint">日常更新创业实录</span>
-        </div>
-
         <a class="connect-card" href="https://github.com/harryjzhang69-web" target="_blank" rel="noopener">
+          <span class="connect-icon">💻</span>
           <span class="connect-label">GitHub</span>
-          <span class="connect-value">@harryjzhang69-web <span class="ext">↗</span></span>
+          <span class="connect-value">harryjzhang69-web <span class="ext">↗</span></span>
+          <span class="connect-hint">代码 · 开源</span>
         </a>
       </div>
 
       <p class="connect-cta">
-        如果你也在做独立产品 / AI / 或者只是想随便聊聊——
+        如果你也在做独立产品 / AI / 或者只是想聊聊——
         <a href="mailto:2385069706@qq.com">说一声</a>。
       </p>
     </section>
@@ -326,19 +367,19 @@
           <span>Harry</span>
         </div>
         <div class="footer-links">
-          <a href="#now">现在</a>
-          <a href="#building">在做</a>
-          <a href="#writing">写作</a>
+          <a href="#products">产品</a>
+          <a href="#process">在做</a>
           <a href="#about">关于</a>
+          <a href="#connect">联系</a>
         </div>
         <div class="footer-meta">
           <span>© 2026 Harry</span>
           <span class="dot-sep">·</span>
-          <span>Shenzhen, China</span>
+          <span>Made with ☕ in Shenzhen</span>
         </div>
       </div>
       <div class="footer-line">
-        <span class="muted">v1.0 · 一个产品经理的公开实验</span>
+        <span class="muted">v1.1 · 一个清华 PM 的独立开发记录</span>
       </div>
     </div>
   </footer>
