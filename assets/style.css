@@ -1123,3 +1123,272 @@ button:focus-visible {
   color: var(--accent);
 }
 
+/* ============================================
+ * v1.3 — Polish Pass
+ * Hero footer, Ideas wall, Product card upgrades, Refinements
+ * ============================================ */
+
+/* ===== Hero footer (版本号 / 时间戳脚标) ===== */
+.hero-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+  flex-wrap: wrap;
+}
+.hero-foot-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-foot-item .dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+}
+.hero-foot-item .dot-pulse {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18); }
+  50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.05); }
+}
+.hero-foot-sep {
+  color: var(--text-2);
+  opacity: 0.5;
+}
+
+/* ===== Product card — v1.3 上层装饰条 + 升级 hover ===== */
+.product {
+  position: relative;
+  overflow: hidden;
+}
+.product::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+.product:hover::before {
+  opacity: 1;
+}
+.product.featured::before {
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.6;
+}
+.product.featured:hover::before {
+  opacity: 1;
+}
+
+/* Product glyph 升级——多层质感 */
+.product-glyph {
+  position: relative;
+  overflow: hidden;
+  letter-spacing: -0.02em;
+}
+.product-glyph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 40%);
+  pointer-events: none;
+}
+.product.featured .product-glyph {
+  letter-spacing: -0.02em;
+}
+
+/* Product 数据小细节 */
+.product-tags li {
+  transition: all 0.15s ease;
+}
+.product:hover .product-tags li {
+  border-color: var(--line-strong);
+}
+
+/* ===== Ideas Wall（想法墙） ===== */
+.ideas-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+.idea {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  transition: all 0.18s ease;
+  position: relative;
+}
+.idea:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+.idea-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+}
+.idea-body {
+  min-width: 0;
+}
+.idea-body h4 {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.idea-body p {
+  font-size: 13.5px;
+  color: var(--text-1);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.idea-body p a {
+  color: var(--accent);
+  border-bottom-color: var(--accent-soft);
+}
+.idea-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-2);
+  text-transform: uppercase;
+}
+.idea-cta {
+  background: var(--accent-soft);
+  border-color: transparent;
+  border-style: dashed;
+}
+.idea-cta {
+  border: 1px dashed var(--accent);
+  background: var(--accent-soft);
+}
+.idea-cta:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.idea-cta .idea-num {
+  color: var(--accent);
+}
+.idea-cta .idea-body h4 {
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .ideas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 整体细节优化 ===== */
+
+/* hero title 升级——更大字号 + 更紧字距 */
+.hero-title {
+  letter-spacing: -0.028em;
+}
+.hero-title .hl {
+  background: linear-gradient(120deg, var(--accent), #c084fc 60%, var(--accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -200% center; }
+}
+
+/* connect-card 升级 hover */
+.connect-card {
+  transition: all 0.18s ease;
+}
+.connect-card:hover {
+  transform: translateY(-1px);
+}
+
+/* btn 升级 */
+.btn {
+  transition: all 0.16s ease;
+}
+.btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
+.btn-arrow {
+  display: inline-block;
+  transition: transform 0.16s ease;
+}
+
+/* topnav 升级——磨砂质感 */
+.topnav {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+}
+
+/* rule 装饰升级 */
+.rule {
+  margin: 64px 0 36px;
+}
+.rule-tag, .rule-tag-r {
+  font-weight: 500;
+}
+
+/* block-head 数字升级 */
+.block-num {
+  font-feature-settings: "tnum";
+}
+
+/* Section block 增加上下呼吸 */
+.block {
+  scroll-margin-top: 80px;
+}
+
+/* CV 时间线轴线 */
+.about-cv {
+  position: relative;
+}
+
+/* product 上线状态徽章升级 */
+.status-live {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  border-color: transparent !important;
+}
+[data-theme="dark"] .status-live {
+  background: rgba(34, 197, 94, 0.18);
+  color: #4ade80;
+}
+.status-dev {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: transparent !important;
+}
+
+
