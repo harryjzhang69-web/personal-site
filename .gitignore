@@ -1,0 +1,24 @@
+# 忽略文件
+node_modules/
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.log
+_*.log
+_check.log
+_install.log
+_eop_*.log
+_selftest.log
+
+# 部署产物
+*.zip
+harry-site.zip
+
+# 编辑器
+.vscode/
+.idea/
+
+# 系统
+.env
+.env.local
