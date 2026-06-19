@@ -2819,8 +2819,14 @@ button:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 38%;   /* 兼顾上方"清华大学"横幅 + 下方人像 */
   display: block;
-  filter: saturate(1.05);
+  filter: saturate(1.08) contrast(1.02);
+  transition: transform .6s ease, filter .6s ease;
+}
+.avatar-card.has-photo:hover .avatar-img {
+  transform: scale(1.03);
+  filter: saturate(1.15) contrast(1.04);
 }
 
 /* 占位状态（H + 渐变） */
