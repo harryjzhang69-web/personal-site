@@ -2897,6 +2897,500 @@ button:focus-visible {
   }
 }
 
+/* ============================================
+ * v2.0 — 商业化升级
+ * 新增：方法论 / 咨询服务 / 产品电商化 / Hot 徽章
+ *      / 二维码 hover / Topnav CTA / 双 CTA 按钮
+ * ============================================ */
+
+/* ---------- Topnav CTA 按钮 ---------- */
+.topnav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  margin-left: 16px;
+  background: linear-gradient(135deg, #5b6cf5, #a855f7);
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 4px 12px rgba(91,108,245,0.20);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.topnav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 8px 18px rgba(91,108,245,0.32);
+}
+.topnav-cta-arrow {
+  transition: transform 0.18s ease;
+}
+.topnav-cta:hover .topnav-cta-arrow {
+  transform: translateX(2px);
+}
+@media (max-width: 760px) {
+  .topnav-cta { display: none; }
+}
+
+/* ---------- 双 CTA 主按钮（已有）+ ghost-tech 副按钮 ---------- */
+.btn-ghost-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  height: 44px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1.5px solid var(--text);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.btn-ghost-tech::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(91,108,245,0.10), rgba(168,85,247,0.10));
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+.btn-ghost-tech:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+.btn-ghost-tech:hover::before {
+  opacity: 1;
+}
+.btn-ghost-tech > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- METHODOLOGY · 数据矩阵 + 步进式 ---------- */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 28px 0 36px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+.metric {
+  padding: 22px 18px;
+  text-align: center;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.metric:last-child { border-right: none; }
+.metric strong {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.024em;
+  background: linear-gradient(135deg, #5b6cf5, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+.metric-label {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  margin-top: 4px;
+}
+.metric-desc {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+}
+@media (max-width: 760px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .metric:nth-child(2) { border-right: none; }
+  .metric:nth-child(1), .metric:nth-child(2) {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  counter-reset: step;
+}
+.step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  padding: 22px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.step:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(91, 108, 245, 0.10);
+}
+.step-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.step-body h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.step-body p {
+  font-size: 13.5px;
+  color: var(--text-1);
+  line-height: 1.65;
+}
+.step-body p strong {
+  color: var(--text);
+  font-weight: 500;
+}
+@media (max-width: 760px) {
+  .steps-list { grid-template-columns: 1fr; }
+}
+
+/* ---------- CONSULTING · 服务卡片 3 列 ---------- */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 28px;
+}
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+
+.service-card {
+  position: relative;
+  padding: 28px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(10,10,10,0.04), 0 4px 14px rgba(10,10,10,0.04);
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: 0 4px 8px rgba(10,10,10,0.06), 0 16px 36px rgba(10,10,10,0.08);
+}
+.service-featured {
+  background: linear-gradient(180deg, var(--accent-soft), var(--bg-2) 30%);
+  border-color: rgba(91, 108, 245, 0.28);
+}
+.service-featured:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 8px rgba(91,108,245,0.10), 0 16px 36px rgba(91,108,245,0.20);
+}
+
+.service-hot {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #f97316, #ef4444);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.30);
+}
+
+.service-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.service-icon[data-bg="blue"]   { background: #dbeafe; color: #1e40af; }
+.service-icon[data-bg="purple"] { background: #ede9fe; color: #6d28d9; }
+.service-icon[data-bg="green"]  { background: #dcfce7; color: #15803d; }
+[data-theme="dark"] .service-icon[data-bg="blue"]   { background: rgba(96,165,250,0.16); color: #93c5fd; }
+[data-theme="dark"] .service-icon[data-bg="purple"] { background: rgba(139,149,232,0.20); color: #c4b5fd; }
+[data-theme="dark"] .service-icon[data-bg="green"]  { background: rgba(74,222,128,0.18); color: #86efac; }
+
+.service-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--text);
+}
+.service-tagline {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.service-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.service-bullets li {
+  font-size: 13.5px;
+  color: var(--text-1);
+  line-height: 1.55;
+  padding-left: 22px;
+  position: relative;
+}
+.service-bullets li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--mono);
+}
+.service-foot {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.service-price {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-1);
+  letter-spacing: -0.005em;
+}
+.service-price strong {
+  font-size: 16px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.btn-link-arrow {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+  transition: all 0.15s;
+}
+.btn-link-arrow:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* 服务卡 1v1 时段的双 CTA 行 */
+.service-cta-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.btn-cta-book {
+  flex: 1;
+  min-width: 140px;
+  padding: 0 16px !important;
+  height: 40px !important;
+  font-size: 13px !important;
+}
+.btn-cta-cal {
+  flex: 1;
+  min-width: 140px;
+  height: 40px !important;
+  font-size: 13px !important;
+  padding: 0 14px !important;
+}
+
+/* Calendly 嵌入容器（默认隐藏） */
+.calendly-embed {
+  margin-top: 12px;
+  padding: 14px;
+  background: var(--bg-1);
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+}
+.calendly-hint {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  text-align: center;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* ---------- PRODUCTS 电商化升级 ---------- */
+.product-hot {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #f97316, #ef4444);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.30);
+  z-index: 5;
+}
+
+/* product 双 CTA */
+.product-cta-dual {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.product-cta-dual .btn-sm {
+  height: 36px !important;
+  padding: 0 14px !important;
+  font-size: 13px !important;
+}
+.product-cta-dual .btn-buy {
+  background: linear-gradient(135deg, #5b6cf5, #a855f7) !important;
+  color: #fff !important;
+}
+.btn-buy.disabled-soft {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.3);
+}
+
+/* ---------- 商业合作微信：hover 弹二维码 ---------- */
+.social-icon-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.qr-popover {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 180px;
+  padding: 14px 14px 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+.qr-popover::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: var(--bg-2);
+  border-right: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+.social-icon-wrap:hover .qr-popover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.qr-img-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 8px;
+}
+.qr-img-wrap img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+.qr-label {
+  font-size: 11.5px;
+  color: var(--text-1);
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+}
+.qr-id {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  text-align: center;
+  margin: 2px 0 0;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 主 hero CTA 加图标 padding 微调 ---------- */
+.btn-cta-main svg {
+  margin-right: 2px;
+}
+
+/* ---------- 移动端响应式优化 ---------- */
+@media (max-width: 640px) {
+  .topnav-links {
+    gap: 14px !important;
+  }
+  .topnav-links a {
+    font-size: 12.5px !important;
+  }
+  .service-cta-row {
+    flex-direction: column;
+  }
+  .btn-cta-book, .btn-cta-cal {
+    width: 100%;
+  }
+}
+
+
 
 
 
