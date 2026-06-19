@@ -21,6 +21,35 @@ function getSystemTheme() {
   document.documentElement.setAttribute("data-theme", initial);
 })();
 
+/* ============= 复制微信号 ============= */
+function copyWechat() {
+  const wxId = "jialin_69";
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(wxId).then(() => showToast("微信号已复制：" + wxId));
+  } else {
+    // 兜底
+    const input = document.createElement("input");
+    input.value = wxId;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
+    showToast("微信号已复制：" + wxId);
+  }
+}
+
+function showToast(msg) {
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.classList.add("show"), 10);
+  setTimeout(() => {
+    t.classList.remove("show");
+    setTimeout(() => t.remove(), 300);
+  }, 2200);
+}
+
 /* ============= 顶部 nav 滚动时高亮当前 section ============= */
 window.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("section[id]");
