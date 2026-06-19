@@ -137,3 +137,68 @@ window.addEventListener("DOMContentLoaded", () => {
 
   targets.forEach(el => io.observe(el));
 });
+
+
+/* =====================================================================
+ *  v3.0 · BGM 控制（《星游记》情怀 BGM）
+ *  - 默认静音/暂停（顺应浏览器 autoplay policy）
+ *  - 初始音量严格 0.2（20% 柔和背景）
+ *  - 点击图标：播放 / 暂停切换
+ *  - 用户上次状态记忆到 localStorage（仅记忆 on/off，不自动播放）
+ *  ===================================================================== */
+const BGM_INITIAL_VOLUME = 0.2; // 💡 调整全站默认音量（0.0 - 1.0）
+
+function toggleBgm() {
+  const audio = document.getElementById("siteBgm");
+  const fab   = document.getElementById("bgmToggle");
+  if (!audio || !fab) return;
+
+  if (audio.paused) {
+    audio.volume = BGM_INITIAL_VOLUME;
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.then(() => {
+        fab.classList.add("is-playing");
+        fab.setAttribute("aria-pressed", "true");
+        try { localStorage.setItem("bgm:wanted", "1"); } catch (e) {}
+        showToast && showToast("🎵 《星游记》· 远航");
+      }).catch(() => {
+        showToast && showToast("浏览器拦截了自动播放，请再点一次");
+      });
+    } else {
+      fab.classList.add("is-playing");
+      fab.setAttribute("aria-pressed", "true");
+    }
+  } else {
+    audio.pause();
+    fab.classList.remove("is-playing");
+    fab.setAttribute("aria-pressed", "false");
+    try { localStorage.setItem("bgm:wanted", "0"); } catch (e) {}
+  }
+}
+
+/* 初始化音量 + 状态同步 */
+(function initBgm() {
+  document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("siteBgm");
+    if (!audio) return;
+    audio.volume = BGM_INITIAL_VOLUME;
+
+    // 音频结束自动取消播放态（虽然 loop=true，但保险起见）
+    audio.addEventListener("pause", function () {
+      const fab = document.getElementById("bgmToggle");
+      if (fab) {
+        fab.classList.remove("is-playing");
+        fab.setAttribute("aria-pressed", "false");
+      }
+    });
+    audio.addEventListener("play", function () {
+      const fab = document.getElementById("bgmToggle");
+      if (fab) {
+        fab.classList.add("is-playing");
+        fab.setAttribute("aria-pressed", "true");
+      }
+    });
+  });
+})();
+
