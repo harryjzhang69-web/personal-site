@@ -621,3 +621,58 @@ body {
 }
 .cfoot-meta a { color: #7c3aed; text-decoration: none; }
 .cfoot-meta em { font-family: "Noto Serif SC", serif; font-style: italic; }
+
+
+/* ===== v0.2 · 响应式收尾 ===== */
+body { overflow-x: hidden; }
+img, svg { max-width: 100%; height: auto; }
+
+@media (max-width: 540px) {
+  .cnav { padding: 12px 16px; flex-wrap: wrap; gap: 6px; }
+  .cnav-back { font-size: 11px; }
+  .cnav-mid { font-size: 16px; }
+  .cnav-mid em { font-size: 12px; }
+  .cnav-tag { font-size: 9px; padding: 3px 7px; }
+
+  .container { padding: 30px 18px 60px; }
+
+  .intro { margin-bottom: 48px; padding-bottom: 40px; }
+  .intro-title { font-size: 56px; }
+  .intro-title .en { font-size: 0.36em; display: block; margin: 8px 0 0; }
+  .intro-sub { font-size: 18px; }
+  .intro-pitch { font-size: 14px; padding: 0 4px; }
+
+  .step { margin-bottom: 56px; }
+  .step-head h2 { font-size: 20px; }
+  .step-desc { font-size: 14px; }
+
+  .cast-card { padding: 18px 16px; }
+  .cast-icon { font-size: 22px; }
+  .cast-title { font-size: 16px; }
+
+  .hexagram-card { padding: 24px 20px; gap: 22px; }
+  .hex-name { font-size: 24px; }
+  .hex-short { font-size: 15px; }
+  .hex-block p { font-size: 13.5px; line-height: 1.75; }
+
+  .chat { padding: 18px; min-height: 160px; }
+  .msg { max-width: 92%; font-size: 13.5px; padding: 12px 14px; }
+  .msg-ai { padding-left: 50px; }
+  .msg-ai::before { left: 10px; top: 12px; font-size: 10px; padding: 2px 5px; }
+  .chat-input { font-size: 14px; padding: 10px 12px; }
+  .chat-send { padding: 8px 14px; font-size: 12.5px; }
+  .chat-send svg { display: none; }
+
+  .cfoot-card { padding: 28px 22px; }
+  .cfoot-card h3 { font-size: 18px; }
+  .cfoot-card p { font-size: 13.5px; line-height: 1.85; }
+
+  .cdialog-card { padding: 24px 20px; }
+  .cdialog-input { font-size: 16px; padding: 12px; }
+}
+
+@media (max-width: 400px) {
+  .intro-title { font-size: 44px; }
+  .intro-sub { font-size: 16px; }
+  .step-head h2 { font-size: 18px; }
+}
