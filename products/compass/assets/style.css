@@ -1,0 +1,623 @@
+/* =====================================================
+ *  Compass · MVP v0.1
+ *  设计语言：文人感 + 极少装饰 + 紫金调点缀（卦象用金色）
+ * ===================================================== */
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Noto Serif SC", system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(168, 85, 247, 0.07) 0%, transparent 60%),
+    #fafaf7;
+  color: #1c1917;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ---------- Top Nav ---------- */
+.cnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+  background: rgba(250, 250, 247, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.cnav-back {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #57534e;
+  text-decoration: none;
+  transition: color .2s;
+}
+.cnav-back:hover { color: #7c3aed; }
+.cnav-mid {
+  font-family: "Noto Serif SC", serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #1c1917;
+}
+.cnav-mid em {
+  font-style: italic;
+  font-weight: 400;
+  color: #a8a29e;
+  font-family: "Inter", serif;
+  font-size: 14px;
+  margin-left: 4px;
+}
+.cnav-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+/* ---------- Container ---------- */
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 60px 32px 80px;
+}
+
+/* ---------- Intro ---------- */
+.intro {
+  text-align: center;
+  margin-bottom: 80px;
+  padding-bottom: 60px;
+  border-bottom: 1px dashed rgba(28, 25, 23, 0.1);
+}
+.intro-title {
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(48px, 8vw, 96px);
+  margin: 0 0 20px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+.intro-title .cn {
+  background: linear-gradient(135deg, #1c1917 0%, #44403c 60%, #78716c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.intro-title .en {
+  font-family: "Inter", serif;
+  font-style: italic;
+  font-weight: 300;
+  color: #a8a29e;
+  font-size: 0.45em;
+  margin-left: 8px;
+  letter-spacing: 0.02em;
+}
+.intro-sub {
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 400;
+  color: #44403c;
+  margin: 0 0 24px;
+  letter-spacing: 0.02em;
+}
+.intro-sub em {
+  font-style: italic;
+  background: linear-gradient(120deg, #7c3aed, #d97706);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+.intro-pitch {
+  max-width: 580px;
+  margin: 0 auto 28px;
+  font-size: 15.5px;
+  color: #57534e;
+  line-height: 1.85;
+}
+.intro-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #78716c;
+}
+.meta-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #d97706;
+  box-shadow: 0 0 8px rgba(217, 119, 6, 0.5);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* ---------- Step common ---------- */
+.step {
+  margin-bottom: 80px;
+  scroll-margin-top: 80px;
+}
+.step.hidden { display: none; }
+.step-head {
+  margin-bottom: 36px;
+}
+.step-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #a8a29e;
+  display: block;
+  margin-bottom: 6px;
+}
+.step-head h2 {
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(24px, 3.5vw, 32px);
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: 0.02em;
+  color: #1c1917;
+}
+.step-desc {
+  font-size: 15px;
+  color: #57534e;
+  line-height: 1.85;
+  margin: 0;
+}
+.step-desc strong { color: #7c3aed; }
+
+/* ---------- Cast Cards ---------- */
+.cast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.cast-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(28, 25, 23, 0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all .35s ease;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+.cast-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0), rgba(217, 119, 6, 0));
+  transition: all .4s ease;
+  pointer-events: none;
+}
+.cast-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124, 58, 237, 0.25);
+  box-shadow: 0 16px 40px -16px rgba(124, 58, 237, 0.25);
+}
+.cast-card:hover::before {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.04), rgba(217, 119, 6, 0.04));
+}
+.cast-icon { font-size: 28px; line-height: 1; }
+.cast-title {
+  font-family: "Noto Serif SC", serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1c1917;
+  letter-spacing: 0.02em;
+}
+.cast-sub {
+  font-size: 12.5px;
+  color: #78716c;
+  line-height: 1.6;
+}
+.cast-cta {
+  margin-top: auto;
+  padding-top: 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #7c3aed;
+  font-weight: 600;
+}
+@media (max-width: 700px) {
+  .cast-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Hexagram ---------- */
+.hexagram-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+  padding: 40px;
+  background:
+    linear-gradient(135deg, rgba(252, 211, 77, 0.08), rgba(168, 85, 247, 0.08)),
+    rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(217, 119, 6, 0.18);
+  border-radius: 18px;
+  align-items: start;
+  box-shadow: 0 16px 40px -20px rgba(217, 119, 6, 0.2);
+}
+.hex-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.yao-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 6px;
+  width: 80px;
+}
+.yao {
+  height: 6px;
+  background: #1c1917;
+  border-radius: 1px;
+}
+.yao.yao-yang { /* 阳爻：一根 */ }
+.yao.yao-yin {  /* 阴爻：中间断 */
+  background: linear-gradient(90deg, #1c1917 0 40%, transparent 40% 60%, #1c1917 60%);
+}
+.hex-glyph {
+  font-family: "Noto Serif SC", serif;
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #d97706;
+  background: linear-gradient(135deg, #d97706, #92400e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  line-height: 1;
+}
+.hex-text { padding-top: 4px; }
+.hex-id {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: #78716c;
+  margin-bottom: 12px;
+}
+.hex-name {
+  font-family: "Noto Serif SC", serif;
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  letter-spacing: 0.04em;
+  color: #1c1917;
+}
+.hex-short {
+  font-family: "Noto Serif SC", serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #44403c;
+  margin: 0 0 24px;
+  letter-spacing: 0.02em;
+}
+.hex-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.3), transparent);
+  margin: 0 0 20px;
+}
+.hex-block { margin-bottom: 16px; }
+.hex-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d97706;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+.hex-block p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #1c1917;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .hexagram-card {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 22px;
+  }
+  .hex-visual { flex-direction: row; gap: 24px; justify-content: center; }
+  .hex-name { font-size: 28px; }
+}
+
+/* ---------- Chat ---------- */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(28, 25, 23, 0.08);
+  border-radius: 18px;
+  margin-bottom: 18px;
+  min-height: 200px;
+}
+.msg {
+  max-width: 86%;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 14.5px;
+  line-height: 1.85;
+  animation: msgIn 0.4s ease;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.msg-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #1c1917, #44403c);
+  color: #fafaf7;
+  border-bottom-right-radius: 4px;
+}
+.msg-ai {
+  align-self: flex-start;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  color: #1c1917;
+  border-bottom-left-radius: 4px;
+  position: relative;
+  padding-left: 56px;
+}
+.msg-ai::before {
+  content: "罗盘";
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #d97706;
+  letter-spacing: 0.06em;
+  background: rgba(217, 119, 6, 0.12);
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+.msg-ai em {
+  font-style: italic;
+  color: #7c3aed;
+  font-weight: 600;
+}
+.msg-ai strong {
+  color: #d97706;
+  font-weight: 700;
+}
+.chat-empty {
+  text-align: center;
+  color: #a8a29e;
+  font-size: 13.5px;
+  padding: 40px 20px;
+  font-style: italic;
+}
+
+.chat-input-wrap {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid rgba(28, 25, 23, 0.12);
+  border-radius: 14px;
+  transition: border-color .25s;
+}
+.chat-input-wrap:focus-within {
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+.chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #1c1917;
+}
+.chat-input::placeholder { color: #a8a29e; }
+.chat-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #1c1917, #44403c);
+  color: #fafaf7;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: transform .15s, box-shadow .25s;
+}
+.chat-send:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -8px rgba(28, 25, 23, 0.3);
+}
+.chat-send:active { transform: translateY(0); }
+
+.chat-hint {
+  text-align: center;
+  font-size: 12.5px;
+  color: #a8a29e;
+  line-height: 1.8;
+  margin: 18px 0 28px;
+}
+.chat-hint strong { color: #7c3aed; }
+
+.reset-wrap { text-align: center; }
+.reset-btn {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #57534e;
+  background: transparent;
+  border: 1px dashed rgba(28, 25, 23, 0.2);
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .25s;
+}
+.reset-btn:hover {
+  color: #7c3aed;
+  border-color: rgba(124, 58, 237, 0.4);
+  border-style: solid;
+}
+
+/* ---------- 弹窗（数字起卦输入） ---------- */
+.cdialog {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 25, 23, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.cdialog.open { display: flex; }
+.cdialog-card {
+  background: #fafaf7;
+  border-radius: 18px;
+  padding: 32px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.5);
+  animation: dialogIn 0.3s ease;
+}
+@keyframes dialogIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cdialog h3 {
+  font-family: "Noto Serif SC", serif;
+  font-size: 22px;
+  margin: 0 0 8px;
+  color: #1c1917;
+}
+.cdialog p {
+  font-size: 14px;
+  color: #78716c;
+  margin: 0 0 24px;
+  line-height: 1.7;
+}
+.cdialog-inputs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.cdialog-input {
+  flex: 1;
+  padding: 14px;
+  font-size: 18px;
+  text-align: center;
+  border: 1px solid rgba(28, 25, 23, 0.15);
+  border-radius: 10px;
+  outline: none;
+  font-family: "JetBrains Mono", monospace;
+}
+.cdialog-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+}
+.cdialog-actions { display: flex; gap: 10px; }
+.cdialog-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cdialog-cancel {
+  background: rgba(28, 25, 23, 0.08);
+  color: #57534e;
+}
+.cdialog-confirm {
+  background: linear-gradient(135deg, #1c1917, #44403c);
+  color: #fafaf7;
+}
+
+/* ---------- Footer ---------- */
+.cfoot {
+  margin-top: 80px;
+  padding-top: 60px;
+  border-top: 1px dashed rgba(28, 25, 23, 0.1);
+}
+.cfoot-card {
+  padding: 36px 32px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(217, 119, 6, 0.05));
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  border-radius: 18px;
+  margin-bottom: 36px;
+}
+.cfoot-card h3 {
+  font-family: "Noto Serif SC", serif;
+  font-size: 22px;
+  margin: 0 0 14px;
+  color: #1c1917;
+}
+.cfoot-card p {
+  font-size: 14.5px;
+  line-height: 2;
+  color: #44403c;
+  margin: 0 0 20px;
+}
+.cfoot-cta {
+  display: inline-block;
+  padding: 12px 22px;
+  background: #1c1917;
+  color: #fafaf7;
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all .25s;
+}
+.cfoot-cta:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
+}
+.cfoot-meta {
+  text-align: center;
+  font-size: 12px;
+  color: #a8a29e;
+  line-height: 2;
+  font-family: "JetBrains Mono", monospace;
+}
+.cfoot-meta a { color: #7c3aed; text-decoration: none; }
+.cfoot-meta em { font-family: "Noto Serif SC", serif; font-style: italic; }
