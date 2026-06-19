@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>罗盘 · Compass — 易经 + AI 的镜子，不是预言机</title>
   <meta name="description" content="罗盘 Compass · 融合易经卦象与 AI 共情对话的思考工具。不算未来、不卖恐惧——只做你思考时的一面镜子。" />
-  <meta property="og:title" content="罗盘 · Compass" />
-  <meta property="og:description" content="易经 + AI 的镜子，不是预言机" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,7 +18,7 @@
   <nav class="cnav">
     <a class="cnav-back" href="../../index.html#products">← Harry 的产品橱窗</a>
     <span class="cnav-mid">罗盘 <em>Compass</em></span>
-    <span class="cnav-tag">EARLY · MVP</span>
+    <span class="cnav-tag" id="modeTag">SCRIPT MVP</span>
   </nav>
 
   <main class="container">
@@ -36,7 +34,7 @@
         不是预言机。
       </p>
       <p class="intro-pitch">
-        不算未来、不卖恐惧、不化解、不改运——
+        不算未来、不卖恐惧、不化解、不改运——<br/>
         只在你<strong>真的需要思考</strong>时，递给你一面镜子。
       </p>
       <div class="intro-meta">
@@ -52,26 +50,26 @@
         <h2>静下来 · 起一卦</h2>
         <p class="step-desc">
           先想一件正在困扰你的事。<br/>
-          不要想"答案"，只想"问题"。然后选一种方式起卦——
+          不要想「答案」，只想「问题」。然后选一种方式起卦——
         </p>
       </div>
 
       <div class="cast-grid">
-        <button class="cast-card" data-cast="random">
+        <button class="cast-card" data-cast="random" type="button">
           <span class="cast-icon">🪙</span>
           <span class="cast-title">摇钱起卦</span>
           <span class="cast-sub">3 枚铜钱 · 古法默认</span>
           <span class="cast-cta">开始 →</span>
         </button>
 
-        <button class="cast-card" data-cast="number">
+        <button class="cast-card" data-cast="number" type="button">
           <span class="cast-icon">🔢</span>
           <span class="cast-title">报数起卦</span>
           <span class="cast-sub">说出脑中的两个数字</span>
           <span class="cast-cta">开始 →</span>
         </button>
 
-        <button class="cast-card" data-cast="time">
+        <button class="cast-card" data-cast="time" type="button">
           <span class="cast-icon">⏱</span>
           <span class="cast-title">时间起卦</span>
           <span class="cast-sub">用当下时刻起卦</span>
@@ -80,7 +78,7 @@
       </div>
     </section>
 
-    <!-- ============= STEP 2: 卦象 (隐藏直到起卦) ============= -->
+    <!-- ============= STEP 2: 卦象（隐藏） ============= -->
     <section class="step step-2 hidden" id="result">
       <div class="step-head">
         <span class="step-num">02</span>
@@ -89,13 +87,14 @@
 
       <div class="hexagram-card">
         <div class="hex-visual">
-          <!-- 六爻图（动态生成 6 条爻线） -->
           <div class="yao-stack" id="yaoStack"></div>
           <div class="hex-glyph" id="hexGlyph">乾</div>
         </div>
 
         <div class="hex-text">
-          <div class="hex-id"><span id="hexId">第 1 卦</span> · <span id="hexSymbol">乾为天</span></div>
+          <div class="hex-id">
+            <span id="hexId">第 1 卦</span> · <span id="hexSymbol">乾为天</span>
+          </div>
           <h3 class="hex-name" id="hexName">乾</h3>
           <p class="hex-short" id="hexShort">刚健自强 · 持续创造</p>
 
@@ -105,11 +104,20 @@
             <span class="hex-label">现代解读</span>
             <p id="hexAdvice">—</p>
           </div>
+
+          <div class="hex-actions">
+            <button class="hex-action-btn" id="btnRecast" type="button">
+              <span>↻</span><span>再摇一卦</span>
+            </button>
+            <button class="hex-action-btn" id="btnShare" type="button">
+              <span>📋</span><span>复制卦辞</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ============= STEP 3: AI 对话 (隐藏直到起卦) ============= -->
+    <!-- ============= STEP 3: AI 对话（隐藏） ============= -->
     <section class="step step-3 hidden" id="dialog">
       <div class="step-head">
         <span class="step-num">03</span>
@@ -120,49 +128,80 @@
         </p>
       </div>
 
-      <div class="chat" id="chat">
-        <!-- 消息会动态插入 -->
-      </div>
+      <div class="chat" id="chat"></div>
 
       <div class="chat-input-wrap">
-        <input type="text" id="chatInput" class="chat-input" placeholder="把困扰你的事，简单说一句..." />
-        <button id="chatSend" class="chat-send">
+        <input type="text" id="chatInput" class="chat-input" placeholder="把困扰你的事，简单说一句..." autocomplete="off" />
+        <button id="chatSend" class="chat-send" type="button">
           <span>发送</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
         </button>
       </div>
 
-      <p class="chat-hint">
-        💡 这是 MVP 演示版——AI 回复目前是<strong>规则脚本 + 卦象共情</strong>。<br/>
-        正式版会接入大模型，让对话真正"懂你"。
-      </p>
-
-      <div class="reset-wrap">
-        <button class="reset-btn" onclick="resetCompass()">↻ 再起一卦</button>
+      <div class="chat-meta">
+        <span class="chat-meta-pill" id="chatMode">📝 脚本模式 · 4 轮对话</span>
+        <button class="chat-meta-link" id="btnReset" type="button">↻ 再起一卦</button>
       </div>
+
+      <p class="chat-hint">
+        💡 当前是 <strong>脚本演示版</strong>。<br/>
+        完整版接入 DeepSeek / 通义千问后，AI 会真正基于你的问题理解卦象、给出针对性回应。
+      </p>
     </section>
 
-    <!-- ============= 结尾 / 商业化伏笔 ============= -->
+    <!-- ============= 历史 ============= -->
+    <section class="step step-history hidden" id="history">
+      <div class="step-head">
+        <span class="step-num">★</span>
+        <h2>你的卦象历史</h2>
+        <p class="step-desc">最近 10 次起卦记录都存在你浏览器里，不上传任何服务器。</p>
+      </div>
+      <div class="history-list" id="historyList"></div>
+    </section>
+
+    <!-- ============= FOOTER ============= -->
     <footer class="cfoot">
       <div class="cfoot-card">
         <h3>这只是开始</h3>
         <p>
           完整版罗盘会有：<br/>
-          · 六十四卦完整爻辞（不是 1 句概括，而是每一爻独立解读）<br/>
+          · 六十四卦完整爻辞（每一爻独立解读）<br/>
           · 八字命盘 + 易经合参（双盘互证）<br/>
-          · AI 真实大模型对话（不是脚本）<br/>
-          · 私人卦象历史（看你这一年都问过什么）
+          · 真大模型对话（接 DeepSeek，懂卦也懂你）<br/>
+          · 长程上下文（你这一年都问过什么）
         </p>
         <a href="../../index.html#connect" class="cfoot-cta">想第一时间用上正式版？联系我 →</a>
       </div>
 
       <p class="cfoot-meta">
-        罗盘 Compass · MVP v0.1 · Made by <a href="../../index.html">Harry</a><br/>
+        罗盘 Compass · MVP v0.2 · Made by <a href="../../index.html">Harry</a><br/>
         <em>不算未来、不卖恐惧。Made with 易经 & ❤️</em>
       </p>
     </footer>
 
   </main>
+
+  <!-- 数字起卦弹窗（提前放在 DOM 里） -->
+  <div class="cdialog" id="numDialog">
+    <div class="cdialog-card">
+      <h3>报数起卦</h3>
+      <p>不要思考，<br/>说出脑子里冒出的<strong>第一个</strong>两个数字。</p>
+      <div class="cdialog-inputs">
+        <input type="number" min="1" id="upInput" class="cdialog-input" placeholder="数字 1" />
+        <input type="number" min="1" id="loInput" class="cdialog-input" placeholder="数字 2" />
+      </div>
+      <div class="cdialog-actions">
+        <button class="cdialog-cancel" type="button">取消</button>
+        <button class="cdialog-confirm" type="button">起卦</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
   <script src="./assets/hexagrams.js"></script>
   <script src="./assets/main.js"></script>
