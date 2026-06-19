@@ -140,11 +140,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 /* =====================================================================
- *  v3.0 · BGM 控制（《星游记》情怀 BGM）
- *  - 默认静音/暂停（顺应浏览器 autoplay policy）
- *  - 初始音量严格 0.2（20% 柔和背景）
+ *  v3.4 · BGM 控制（逃跑计划 · 再飞行）
+ *  - 默认暂停（顺应浏览器 autoplay policy）
+ *  - 初始音量 0.2（20% 柔和背景）
  *  - 点击图标：播放 / 暂停切换
  *  - 用户上次状态记忆到 localStorage（仅记忆 on/off，不自动播放）
+ *  - 音频文件本地化 ./assets/bgm-zaifeixing.mp3，避免远程 URL 失效
  *  ===================================================================== */
 const BGM_INITIAL_VOLUME = 0.2; // 💡 调整全站默认音量（0.0 - 1.0）
 
@@ -161,9 +162,13 @@ function toggleBgm() {
         fab.classList.add("is-playing");
         fab.setAttribute("aria-pressed", "true");
         try { localStorage.setItem("bgm:wanted", "1"); } catch (e) {}
-        showToast && showToast("🎵 《星游记》· 远航");
-      }).catch(() => {
-        showToast && showToast("浏览器拦截了自动播放，请再点一次");
+        showToast && showToast("🎵 逃跑计划 · 再飞行");
+      }).catch((err) => {
+        // 真正失败（音频文件加载不到 / 浏览器策略），给出可操作提示
+        const reason = (err && err.name === "NotAllowedError")
+          ? "请再点一次 BGM 按钮即可播放"
+          : "音频加载失败，请检查网络后重试";
+        showToast && showToast("🎵 " + reason);
       });
     } else {
       fab.classList.add("is-playing");

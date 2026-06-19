@@ -1058,10 +1058,10 @@
   <!-- =============================================== -->
   <audio
     id="siteBgm"
-    preload="none"
+    preload="auto"
     loop
-    src="https://ts1.tencent-cloud.com/audio/2024/xingyouji.mp3"
-  ><!-- 💡 佳麟，在此处更换音频 URL 即可一键更换全站背景音乐 --></audio>
+    src="./assets/bgm-zaifeixing.mp3"
+  ><!-- 💡 更换 BGM：放到 assets/ 下，把 src 改成对应文件名即可。当前：逃跑计划 · 再飞行 --></audio>
 
   <button
     id="bgmToggle"
@@ -1069,7 +1069,7 @@
     type="button"
     aria-label="切换背景音乐"
     aria-pressed="false"
-    title="《星游记》· 远航 BGM"
+    title="逃跑计划 · 再飞行"
     onclick="toggleBgm()"
   >
     <span class="bgm-disc" aria-hidden="true">
