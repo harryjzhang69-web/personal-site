@@ -2571,6 +2571,217 @@ button:focus-visible {
   vertical-align: baseline;
 }
 
+/* ============================================
+ * v1.8 — Pure AI 定位重构
+ * 1. 标语聚焦 AI · LLM · Agent
+ * 2. 渐变升级到科技感蓝紫极光
+ * 3. demo 加 Mac 浏览器外壳
+ * 4. 全面去掉"安全 / PUBGM"
+ * ============================================ */
+
+/* 升级品牌色：科技感深邃蓝紫极光 */
+:root {
+  --accent: #5b6cf5;            /* 比之前更"AI"的深邃蓝紫 */
+  --accent-2: #a855f7;          /* 极光紫 */
+  --accent-3: #06b6d4;          /* 极光青（点缀） */
+  --accent-soft: rgba(91, 108, 245, 0.10);
+  --accent-glow: rgba(91, 108, 245, 0.22);
+}
+[data-theme="dark"] {
+  --accent: #818cf8;
+  --accent-2: #c084fc;
+  --accent-3: #22d3ee;
+  --accent-soft: rgba(129, 140, 248, 0.14);
+  --accent-glow: rgba(129, 140, 248, 0.28);
+}
+
+/* CTA 主按钮：深邃蓝紫极光渐变 */
+.btn-primary {
+  background: linear-gradient(135deg, #5b6cf5 0%, #7c3aed 50%, #a855f7 100%) !important;
+  background-size: 200% 200% !important;
+  box-shadow:
+    0 1px 2px rgba(91, 108, 245, 0.18),
+    0 6px 18px rgba(91, 108, 245, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.20) inset !important;
+  animation: btn-flow 8s ease-in-out infinite;
+}
+.btn-primary:hover {
+  background-position: 100% 0% !important;
+  box-shadow:
+    0 2px 4px rgba(91, 108, 245, 0.22),
+    0 12px 28px rgba(91, 108, 245, 0.36),
+    0 1px 0 rgba(255, 255, 255, 0.24) inset !important;
+}
+@keyframes btn-flow {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+/* hero-name 渐变升级到科技感三色 */
+.hero-title .hero-name,
+.hero-name {
+  background: linear-gradient(120deg, #3b82f6 0%, #5b6cf5 40%, #a855f7 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+/* hero-monogram 升级渐变（已在 SVG 内做好） */
+.hero-glow {
+  background: radial-gradient(circle at 30% 30%,
+    rgba(59, 130, 246, 0.30) 0%,
+    rgba(168, 85, 247, 0.18) 35%,
+    transparent 70%) !important;
+}
+
+/* hero-chip 升级科技感 */
+.hero-chip {
+  background: var(--bg-2);
+  border: 1px solid rgba(91, 108, 245, 0.12);
+  color: var(--text);
+}
+.hero-chip::before {
+  content: "●";
+  margin-right: 5px;
+  color: var(--accent);
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+/* 信任徽章 cred 也加点科技感 */
+.cred svg {
+  color: var(--accent);
+}
+
+/* ============================================
+ * Mac 浏览器外壳 mockup
+ * 在所有 .demo-screen / .demo-quiz / .demo-phone 顶部
+ * 用 ::before 渲染一个红黄绿圆点 + 地址栏
+ * ============================================ */
+
+/* 给 demo 容器加边框感 + 圆角细节 */
+.demo {
+  border: 1px solid rgba(91, 108, 245, 0.10) !important;
+  background: var(--bg-1);
+  position: relative;
+}
+[data-theme="dark"] .demo {
+  border-color: rgba(129, 140, 248, 0.14) !important;
+}
+
+/* 已经自带 demo-screen-bar 的（坐姿监督员）不重复加 */
+
+/* AI 自测宝典 demo 加 Mac 外壳顶栏 */
+.demo-bible::before {
+  content: "";
+  display: block;
+  height: 30px;
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.demo-bible::after {
+  content: "● ● ●";
+  position: absolute;
+  top: 9px;
+  left: 14px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #fc625d;
+  text-shadow:
+    18px 0 0 #fdbc40,
+    36px 0 0 #34c749;
+}
+
+/* 罗盘 demo 也加 Mac 外壳（手机不动，外面壳子加） */
+.demo-compass {
+  padding-top: 38px !important;
+  position: relative;
+}
+.demo-compass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border-bottom: 1px solid var(--line);
+  border-radius: 12px 12px 0 0;
+}
+.demo-compass::after {
+  content: "● ● ●";
+  position: absolute;
+  top: 9px;
+  left: 14px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #fc625d;
+  text-shadow:
+    18px 0 0 #fdbc40,
+    36px 0 0 #34c749;
+  z-index: 2;
+}
+
+/* 坐姿监督员的 demo-screen 已经自带顶栏，但优化 dot 颜色到 macOS 真实色 */
+.demo-screen-bar .demo-dot.dr { background: #fc625d; }
+.demo-screen-bar .demo-dot.dy { background: #fdbc40; }
+.demo-screen-bar .demo-dot.dg { background: #34c749; }
+
+/* AI 自测 demo 的 quiz-bar 推下 */
+.demo-bible .demo-quiz-bar {
+  border-top: none;
+}
+
+/* ============================================
+ * 状态徽章升级到科技感：淡蓝/淡紫
+ * ============================================ */
+.status-live {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+}
+.status-dev {
+  background: #ede9fe !important;
+  color: #6d28d9 !important;
+}
+/* 探索中 / 内测中（备用，可以给其他状态用） */
+.status-exp {
+  background: #cffafe !important;
+  color: #0e7490 !important;
+}
+
+/* product-tags 改成淡蓝色科技感 */
+.product-tags li {
+  background: #eff6ff !important;
+  color: #1e40af !important;
+}
+[data-theme="dark"] .product-tags li {
+  background: rgba(96, 165, 250, 0.14) !important;
+  color: #93c5fd !important;
+}
+
+/* ============================================
+ * 板块间距：96px 是高级留白的黄金值
+ * ============================================ */
+.rule {
+  margin: 96px 0 44px !important;
+}
+@media (max-width: 640px) {
+  .rule { margin: 64px 0 32px !important; }
+}
+
+/* hero-subtitle 字距优化 */
+.hero-subtitle {
+  letter-spacing: -0.022em !important;
+}
+
+/* hero-credentials 字距 */
+.hero-credentials {
+  letter-spacing: 0.015em;
+}
+
+
 
 
 
