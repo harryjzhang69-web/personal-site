@@ -276,72 +276,80 @@
       </article>
 
       <!-- AI 学习宝典 -->
-      <article class="product">
+      <article class="product featured">
         <div class="product-glyph">学</div>
         <div class="product-body">
           <div class="product-head">
-            <h3>AI 学习宝典</h3>
+            <h3>AI 自测宝典</h3>
             <span class="status status-live">已上线</span>
           </div>
-          <p class="product-tagline">清华 + 大厂视角，给你一份不焦虑的 AI 入门资料。</p>
+          <p class="product-tagline">不是又一份资料合集——是带刷题软件的系统化自学路径。</p>
           <p class="product-desc">
-            <strong>8.15 GB / 126 个文件</strong>，全部来自
-            <strong>微软 · OpenAI · Anthropic · HuggingFace · Datawhale · arXiv 论文</strong>。
-            分四个方向：完整学习包、产品经理 AI 实战、提示词大全、Agent 与大模型应用。
-            筛过、分好类、附带学习路线——不是 100GB 资源大杂烩。
+            AI 行业迭代太快，零散自学最大的痛点是<strong>"我到底学没学懂"</strong>。
+            所以这套不是堆资料，是<strong>「读 → 刷 → 复盘」三步闭环</strong>：
+            <em>10 章系统资料搭框架</em> → <em>自测软件 350 题刷漏洞</em> → <em>错题定向重学</em>。
+            对标考研刷题逻辑，少走 90% 弯路。
           </p>
 
-          <!-- DEMO: 文件夹结构 -->
+          <!-- DEMO: 自测软件界面 + 学习闭环 -->
           <div class="demo demo-bible">
-            <div class="demo-folder">
-              <div class="demo-folder-head">
-                <span class="demo-folder-icon">📁</span>
-                <span class="demo-folder-title">清华&大厂 AI 经验包</span>
-                <span class="demo-folder-size">8.15 GB · 126 个文件</span>
+            <div class="demo-quiz">
+              <div class="demo-quiz-bar">
+                <span class="demo-quiz-meta">第 12 / 350 题 · Prompt 工程</span>
+                <span class="demo-quiz-progress">
+                  <span class="demo-quiz-fill"></span>
+                </span>
               </div>
-              <ul class="demo-folder-tree">
-                <li><span class="ft-icon">📦</span> SKU1_AI 全套学习资料 <span class="ft-tag">¥9.9</span></li>
-                <li class="ft-sub">└─ 微软 AI for Beginners 24 课</li>
-                <li class="ft-sub">└─ OpenAI Cookbook + 50 篇 arXiv 论文</li>
-                <li class="ft-sub">└─ HuggingFace NLP / 深度学习 / RLHF</li>
-                <li><span class="ft-icon">🎯</span> SKU2_AI 产品经理学习包 <span class="ft-tag">¥19.9</span></li>
-                <li><span class="ft-icon">💬</span> SKU3_5000 提示词大全 <span class="ft-tag">¥9.9</span></li>
-                <li><span class="ft-icon">🤖</span> SKU4_AI Agent 与大模型应用 <span class="ft-tag">¥29.9</span></li>
-                <li><span class="ft-icon">🗺️</span> 配套学习路径文档（30 / 21 / 60 天）</li>
-              </ul>
+              <div class="demo-quiz-body">
+                <p class="demo-quiz-q">
+                  <span class="demo-quiz-num">Q.</span>
+                  下列哪种 Prompt 技巧最能<strong>降低大模型幻觉</strong>？
+                </p>
+                <ul class="demo-quiz-opts">
+                  <li><span class="opt-tag">A</span> 把 Temperature 调到 1.0</li>
+                  <li class="opt-correct"><span class="opt-tag">B</span> Few-shot + 让模型"先检索再回答"<span class="opt-mark">✓</span></li>
+                  <li><span class="opt-tag">C</span> 用更长的 system prompt</li>
+                  <li><span class="opt-tag">D</span> 把问题反复问 3 遍</li>
+                </ul>
+                <div class="demo-quiz-explain">
+                  <span class="demo-quiz-tag">解析</span>
+                  幻觉本质是"模型在没依据时编"，Few-shot 给参考 + RAG 让它"先查再答"才是根因之策。
+                </div>
+              </div>
             </div>
 
             <div class="demo-stats">
               <div class="demo-stat">
-                <strong>8.15 GB</strong>
-                <span>真材实料</span>
+                <strong>10</strong>
+                <span>章系统资料</span>
               </div>
               <div class="demo-stat">
-                <strong>126</strong>
-                <span>个独立文件</span>
+                <strong>350</strong>
+                <span>题自测题库</span>
               </div>
               <div class="demo-stat">
-                <strong>4</strong>
-                <span>个 SKU 灵活选</span>
+                <strong>1</strong>
+                <span>个刷题软件</span>
               </div>
               <div class="demo-stat">
-                <strong>0%</strong>
-                <span>盗版 / 灌水内容</span>
+                <strong>3 步</strong>
+                <span>读·刷·复盘闭环</span>
               </div>
             </div>
           </div>
 
           <div class="product-meta">
             <ul class="product-tags">
-              <li>学习资料包</li>
-              <li>提示词 · Agent</li>
-              <li>PM 入门到进阶</li>
+              <li>自测刷题软件</li>
+              <li>10 章资料</li>
+              <li>含答案解析</li>
+              <li>PM · 入门到进阶</li>
             </ul>
-            <span class="product-price">¥9.9 — ¥99</span>
+            <span class="product-price">¥19.9 起</span>
           </div>
           <div class="product-cta">
             <a href="#connect" class="btn btn-sm">
-              <span>加微信免费试读</span>
+              <span>加微信免费试用</span>
               <span class="btn-arrow">→</span>
             </a>
             <span class="product-eta">闲鱼可直接下单</span>
