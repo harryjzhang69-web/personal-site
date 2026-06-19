@@ -50,6 +50,28 @@ function showToast(msg) {
   }, 2200);
 }
 
+/* ============= 预约弹窗 ============= */
+function openBookingModal() {
+  const modal = document.getElementById("bookingModal");
+  if (!modal) return;
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeBookingModal() {
+  const modal = document.getElementById("bookingModal");
+  if (!modal) return;
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+// ESC 关弹窗
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeBookingModal();
+});
+
 /* ============= 顶部 nav 滚动时高亮当前 section ============= */
 window.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("section[id]");

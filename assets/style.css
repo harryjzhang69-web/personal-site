@@ -3390,6 +3390,335 @@ button:focus-visible {
   }
 }
 
+/* ============================================
+ * v2.1 — 精细化打磨
+ * 1. Hero 副标题数字高亮 (-40%)
+ * 2. 1v1 预约 → 私域弹窗（毛玻璃 + 二维码 + 联系矩阵）
+ * 3. 自研产品降级为 Case Study（更轻量边框）
+ * ============================================ */
+
+/* ---------- Hero 数字高亮 ---------- */
+.hl-num {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.015em;
+  padding: 0 2px;
+}
+
+/* ---------- Case Study 视觉降级（不抢咨询风头）---------- */
+/* 自研产品卡稍微减弱阴影，让"咨询服务"成为主角 */
+.product {
+  background: var(--bg-2) !important;
+}
+.product.featured {
+  background: linear-gradient(180deg, var(--bg-2), var(--accent-soft) 240%) !important;
+}
+
+/* 案例标记：每个产品卡左上加 CASE 角标 */
+.product::after {
+  content: "CASE STUDY";
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  z-index: 4;
+  opacity: 0.8;
+}
+.product.featured::after {
+  background: var(--bg-2);
+}
+/* hot 徽章和 case study 同时存在时，case 让位置 */
+.product .product-hot {
+  top: 14px;
+  right: 14px;
+}
+.product .product-glyph {
+  margin-top: 30px;
+}
+
+/* ============================================
+ * MODAL · 预约私域弹窗
+ * ============================================ */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal.show {
+  display: flex;
+  animation: modal-fade-in 0.25s ease;
+}
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 20, 0.55);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+
+.modal-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-2);
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  padding: 36px 32px 28px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 20px 60px rgba(91, 108, 245, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  animation: modal-card-up 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+[data-theme="dark"] .modal-card {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 20px 60px rgba(91, 108, 245, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+@keyframes modal-card-up {
+  from { transform: translateY(20px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text-1);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  padding: 0;
+}
+.modal-close:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.modal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+.modal-eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+.modal-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.modal-sub {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-1);
+  margin: 0;
+}
+
+/* 二维码区 */
+.modal-qr-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+.modal-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 14px 8px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  position: relative;
+}
+[data-theme="dark"] .modal-qr {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+.modal-qr::before,
+.modal-qr::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent);
+}
+.modal-qr::before {
+  top: 6px; left: 6px;
+  border-right: none; border-bottom: none;
+  border-top-left-radius: 4px;
+}
+.modal-qr::after {
+  bottom: 6px; right: 6px;
+  border-left: none; border-top: none;
+  border-bottom-right-radius: 4px;
+}
+.modal-qr img,
+.modal-qr svg {
+  display: block;
+  width: 160px;
+  height: 160px;
+  border-radius: 6px;
+}
+.modal-qr-cap {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text-2);
+  letter-spacing: 0.06em;
+  margin: 8px 0 0;
+  text-transform: uppercase;
+}
+
+/* 联系方式行 */
+.modal-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: var(--bg-1);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+.modal-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.modal-contact-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  width: 56px;
+}
+.modal-contact-value {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.modal-contact-copy {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  letter-spacing: 0.02em;
+}
+.modal-contact-copy:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.modal-tip {
+  font-size: 12.5px;
+  text-align: center;
+  padding: 10px 12px;
+  background: rgba(251, 191, 36, 0.10);
+  border: 1px dashed rgba(251, 191, 36, 0.45);
+  color: #92400e;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+[data-theme="dark"] .modal-tip {
+  background: rgba(251, 191, 36, 0.10);
+  color: #fbbf24;
+}
+.modal-tip strong {
+  color: inherit;
+  font-weight: 600;
+}
+
+.modal-cta-close {
+  width: 100%;
+  height: 42px;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text-1);
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  letter-spacing: -0.005em;
+}
+.modal-cta-close:hover {
+  background: var(--bg-1);
+  color: var(--text);
+  border-color: var(--text-1);
+}
+
+@media (max-width: 480px) {
+  .modal-card {
+    padding: 30px 22px 22px;
+  }
+  .modal-card h3 { font-size: 19px; }
+  .modal-qr img, .modal-qr svg { width: 140px; height: 140px; }
+}
+
+
 
 
 
