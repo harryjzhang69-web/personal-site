@@ -70,7 +70,7 @@ function openNumberDialog() {
     document.body.appendChild(dialog);
   }
   dialog.classList.add("open");
-  setTimeout(() => document.getElementById("upInput")?.focus(), 100);
+  setTimeout(() => document.getElementById("upInput") && document.getElementById("upInput").focus(), 100);
 }
 function closeNumberDialog() {
   const d = document.getElementById("numDialog");
@@ -88,7 +88,11 @@ function doCast(hex) {
   const chat = document.getElementById("chat");
   chat.innerHTML = "";
   setTimeout(() => addMsg("ai", hex.empathy), 400);
-  setTimeout(() => addMsg("ai", `你抽到的是 <strong>${hex.name}</strong> · ${hex.short}<br/><br/>这一卦给到的是这样的提醒——<br/><em>${hex.advice}</em><br/><br/>说说看，你具体在想哪件事？`), 1400);
+  setTimeout(() => addMsg("ai",
+    "你抽到的是 <strong>" + hex.name + "</strong> · " + hex.short +
+    "<br/><br/>这一卦给到的是这样的提醒——<br/><em>" + hex.advice + "</em>" +
+    "<br/><br/>说说看，你具体在想哪件事？"
+  ), 1400);
 
   // 滚到结果区
   setTimeout(() => {
@@ -108,7 +112,7 @@ function renderHexagram(hex) {
   }
 
   document.getElementById("hexGlyph").textContent = hex.name;
-  document.getElementById("hexId").textContent = `第 ${hex.id} 卦`;
+  document.getElementById("hexId").textContent = "第 " + hex.id + " 卦";
   document.getElementById("hexSymbol").textContent = hex.symbol;
   document.getElementById("hexName").textContent = hex.name;
   document.getElementById("hexShort").textContent = hex.short;
@@ -150,7 +154,6 @@ function escapeHtml(s) {
  */
 function aiReply(userText, turn) {
   const hex = currentHexagram;
-  const t = userText.toLowerCase();
 
   // 关键词命中规则
   const isWork    = /工作|公司|老板|同事|项目|裁员|跳槽|升职|绩效/.test(userText);
@@ -166,27 +169,34 @@ function aiReply(userText, turn) {
     if (isLove)   prefix = "感情这事，理性不出来。";
     if (isMoney)  prefix = "钱的事会放大焦虑——但焦虑会让你做更糟的决定。";
     if (isFamily) prefix = "家里事最难，因为没法用利益逻辑算清。";
-    if (isSelf)   prefix = "你这个状态我懂——不是你"出问题"了，是你"在变化"。";
+    if (isSelf)   prefix = "你这个状态我懂——不是你『出问题』了，是你『在变化』。";
 
-    return `${prefix}<br/><br/>结合你抽到的 <strong>${hex.name}</strong> 卦——<em>${hex.short}</em>。<br/><br/>我想先问你一句：<strong>这件事你是从什么时候开始觉得不对劲的？</strong>`;
+    return prefix +
+      "<br/><br/>结合你抽到的 <strong>" + hex.name + "</strong> 卦——<em>" + hex.short + "</em>。" +
+      "<br/><br/>我想先问你一句：<strong>这件事你是从什么时候开始觉得不对劲的？</strong>";
   }
 
   // Turn 2：基于卦象给一个具体角度
   if (turn === 2) {
-    return `嗯，时间线很重要。<br/><br/>${hex.name} 卦里有句话特别打你——<em>"${hex.advice.split("。")[0]}"</em>。<br/><br/>我换个角度问你：<strong>如果半年后回看现在，你最不想后悔的是什么？</strong>`;
+    const firstSentence = hex.advice.split("。")[0];
+    return "嗯，时间线很重要。" +
+      "<br/><br/>" + hex.name + " 卦里有句话特别打你——<em>『" + firstSentence + "』</em>。" +
+      "<br/><br/>我换个角度问你：<strong>如果半年后回看现在，你最不想后悔的是什么？</strong>";
   }
 
   // Turn 3：让用户自己说出答案
   if (turn === 3) {
-    return `你刚才说的，其实你心里已经有答案了。<br/><br/>${hex.name} 卦不是替你决定，它只是把你<em>没想清楚的那一层</em>翻给你看。<br/><br/>如果让你用一句话总结你现在该做的事——<strong>会是哪句？</strong>`;
+    return "你刚才说的，其实你心里已经有答案了。" +
+      "<br/><br/>" + hex.name + " 卦不是替你决定，它只是把你<em>没想清楚的那一层</em>翻给你看。" +
+      "<br/><br/>如果让你用一句话总结你现在该做的事——<strong>会是哪句？</strong>";
   }
 
   // Turn 4+：温和收尾
   if (turn >= 4) {
     const lines = [
-      `<em>"${userText}"</em>——这就是你的卦辞了。<br/><br/>罗盘到这里就够了。<br/>剩下的，得你自己走。`,
-      `这一句，可以记下来。<br/><br/>${hex.name} 卦给的不是答案，是<strong>提醒</strong>。<br/>你想清楚了——就够了。`,
-      `好。<br/><br/>这个对话结束之后，建议你把这次起卦的<strong>问题</strong>和<strong>那句结论</strong>记在一个地方。<br/><br/>3 个月后，回来再看一眼。`,
+      "<em>『" + userText + "』</em>——这就是你的卦辞了。<br/><br/>罗盘到这里就够了。<br/>剩下的，得你自己走。",
+      "这一句，可以记下来。<br/><br/>" + hex.name + " 卦给的不是答案，是<strong>提醒</strong>。<br/>你想清楚了——就够了。",
+      "好。<br/><br/>这个对话结束之后，建议你把这次起卦的<strong>问题</strong>和<strong>那句结论</strong>记在一个地方。<br/><br/>3 个月后，回来再看一眼。",
     ];
     return lines[(turn - 4) % lines.length];
   }
