@@ -1750,5 +1750,139 @@ button:focus-visible {
   }
 }
 
+/* ============================================
+ * v1.5 — Hero 重做：克制、文人感、留白
+ * 学 levels.io / paco.me 的"不解释"
+ * ============================================ */
+
+.hero {
+  padding: 100px 0 80px;
+  max-width: 640px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+.hero-tag .dot {
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hero-title {
+  font-family: var(--sans);
+  font-size: clamp(34px, 5vw, 46px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 32px;
+  /* override 旧的渐变流光 */
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  background: none;
+  -webkit-text-fill-color: var(--text);
+  color: var(--text);
+  animation: none;
+}
+
+.hero-sub {
+  font-size: 17.5px;
+  line-height: 1.7;
+  color: var(--text-1);
+  margin-bottom: 14px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  max-width: 540px;
+}
+.hero-sub strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.hero-sub-quiet {
+  font-size: 15px;
+  color: var(--text-2);
+  margin-bottom: 36px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: -0.003em;
+  max-width: 480px;
+  font-family: var(--serif);
+  font-style: italic;
+}
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.btn-link {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text-1);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+  transition: all 0.15s ease;
+}
+.btn-link:hover {
+  color: var(--text);
+  border-bottom-color: var(--text);
+}
+
+@media (max-width: 540px) {
+  .hero {
+    padding: 70px 0 56px;
+  }
+  .hero-title {
+    font-size: 30px;
+  }
+  .hero-sub {
+    font-size: 16px;
+  }
+  .hero-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+/* 覆盖 v1.3 残留的 hero 样式（hl 渐变流光强行去掉） */
+.hero-title .hl {
+  background: none !important;
+  -webkit-text-fill-color: var(--text) !important;
+  color: var(--text) !important;
+  animation: none !important;
+}
+
+/* 隐藏旧版 hero-meta / hero-foot（HTML已删，但保险） */
+.hero-meta,
+.hero-foot,
+.hero-badges {
+  display: none !important;
+}
+
+
 
 
