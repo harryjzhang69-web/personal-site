@@ -177,14 +177,14 @@ function toggleBgm() {
   }
 }
 
-/* 初始化音量 + 状态同步 */
+/* 初始化音量 + 状态同步 + 首次交互自动尝试播放（绕过浏览器 autoplay 限制） */
 (function initBgm() {
   document.addEventListener("DOMContentLoaded", function () {
     const audio = document.getElementById("siteBgm");
     if (!audio) return;
     audio.volume = BGM_INITIAL_VOLUME;
 
-    // 音频结束自动取消播放态（虽然 loop=true，但保险起见）
+    // 状态同步
     audio.addEventListener("pause", function () {
       const fab = document.getElementById("bgmToggle");
       if (fab) {
@@ -198,6 +198,29 @@ function toggleBgm() {
         fab.classList.add("is-playing");
         fab.setAttribute("aria-pressed", "true");
       }
+    });
+
+    // ============ 首次交互自动尝试播放 ============
+    // 浏览器铁律：页面加载时不能自动播。
+    // 但用户的任何一次点击 / 滚动 / 按键都能"激活"播放权限。
+    // 所以监听首次任意交互，悄悄尝试播放一次。
+    // 用户上次明确点暂停过则尊重选择（bgm:wanted=0）。
+    let triedAutoplay = false;
+    const tryAutoplay = () => {
+      if (triedAutoplay) return;
+      triedAutoplay = true;
+      let userPaused = "0";
+      try { userPaused = localStorage.getItem("bgm:wanted") || ""; } catch (e) {}
+      if (userPaused === "0") return; // 用户明确暂停过，尊重
+      if (!audio.paused) return;       // 已经在播
+      audio.volume = BGM_INITIAL_VOLUME;
+      const p = audio.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => { /* 浏览器仍拒绝就算了，等用户主动点 */ });
+      }
+    };
+    ["click", "touchstart", "scroll", "keydown"].forEach(evt => {
+      window.addEventListener(evt, tryAutoplay, { once: true, passive: true });
     });
   });
 })();
