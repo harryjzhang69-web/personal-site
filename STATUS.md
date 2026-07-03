@@ -1,29 +1,31 @@
 # 个人网站 · 运营状态存档
 
-> 最后更新：2026-07-03。这份文件记录部署链路的真实现状（包括没搞清楚的部分），避免每次换会话都从头排查一遍。
+> 最后更新：2026-07-03 19:30。这份文件记录部署链路的真实现状，避免每次换会话都从头排查一遍。
 
-## 1. 当前的真实困境（重要，先看这个）
+## 0. ✅ 正式对外链接（2026-07-03 已修复，直接用这个）
 
-这个网站有**两套完全独立的托管方案**，目前状态混乱，还没彻底理清：
+**https://harryjzhang69-web.github.io/personal-site/**
 
-| 方案 | 状态 | 证据 |
-|---|---|---|
-| **GitHub Pages**（`harryjzhang69-web.github.io/personal-site`） | 能打开，但内容**停留在 2026-06-19**，此后十几次 git push（含 2026-07-03 加的"读书行动派"产品卡）全部没有反映上去 | 直接查 `Last-Modified` 响应头确认；`raw.githubusercontent.com` 上的源文件是最新的，证明 push 本身成功，只是 Pages 没有重新构建 |
-| **EdgeOne Pages**（README 里写的正式方案，`harry-site.edgeone.app`） | **从未真正部署成功过** —— README 里这行链接从第一次提交到现在都是占位符"（部署后填）"，20次提交里 README 只被改过1次，从没填上过真实地址 | 翻了全部 git log，没有任何 `.github/workflows`、EdgeOne 配置文件、或 commit message 提到部署 |
+GitHub Pages 现在是正常工作的，`git push` 后 1-2 分钟自动更新，不需要走任何临时方案。
 
-**结论：这个网站现在对外可能其实是"半失效"状态**——GitHub Pages 链接能打开但内容旧；EdgeOne 从没配完。需要人工去两边控制台各确认一次：
-1. `https://github.com/harryjzhang69-web/personal-site/settings/pages` —— 看 Source 配置、有没有报错提示
-2. `https://console.cloud.tencent.com/edgeone/pages` —— 看项目列表是否存在，是否关联了 GitHub 仓库
+### 根因 + 修复方式（重要，别再踩同一个坑）
+- **根因**：GitHub Pages 默认用 Jekyll 处理静态站点；这是个纯 HTML/CSS/JS 项目，没有 `.nojekyll` 时 Jekyll 构建在某次之后开始**静默失败**，导致站点停在最后一次成功构建（卡在 2026-06-19，此后十几次 push 全部没生效，包括加的"读书行动派"卡片）
+- **修复**：在仓库根目录加一个空文件 `.nojekyll`，跳过 Jekyll 处理，直接输出原始文件。提交后验证 `Last-Modified` 头变成当天日期，内容确认最新
+- **如果以后又卡住**：先检查 `.nojekyll` 文件是否还在仓库根目录（别不小心被删/被 .gitignore 掉），这是最大概率的复发原因
 
-## 2. MCP 自动部署工具的已知坑
+### 临时应急方案（已弃用，仅记录，AnyDev上还跑着）
+问题修复前，为了让用户立刻看到效果，曾经把网站也部署到 AnyDev 服务器 `http://21.91.155.2:8090/`（`python3 -m http.server`，非持久化，服务器重启会挂）。GitHub Pages 修好后这条不再是主链路，但进程可能还在跑，占用 8090 端口。
 
-CodeBuddy 里的 EdgeOne `deploy_folder` 工具，在当前环境下调用会报错缺少 `EDGEONE_PAGES_PROJECT_NAME` 参数——官方文档说这个参数可选（不设置应该会弹浏览器让你选/建项目），但当前集成环境里这个跳转没有触发，工具本身也没开放"直接传项目名"的参数，AI 侧目前无法绕过。
+### EdgeOne Pages（README 里写的"正式方案"，实际从未配完，现在也不需要它了）
+`harry-site.edgeone.app` 这个链接从第一次提交到现在都是占位符，从没真正部署成功过。既然 GitHub Pages 已经修好且稳定，**不再需要折腾 EdgeOne**，除非以后想要国内访问加速这类额外收益。
 
-**可行的替代方案**：手动打包 zip 拖拽上传到 EdgeOne Pages 控制台。已经生成过一份 `personal_site/harry-site.zip`（含最新代码），但**最后一步"拖到控制台"用户还没确认完成**。
+## 2. MCP 自动部署工具的已知坑（EdgeOne相关，现已不需要，仅存档）
 
-## 3. 已知内容改动（代码层面确认已完成，只是不确定线上是否反映）
+CodeBuddy 里的 EdgeOne `deploy_folder` 工具，在当前环境下调用会报错缺少 `EDGEONE_PAGES_PROJECT_NAME` 参数——工具本身没开放"直接传项目名"的参数，AI 侧目前无法绕过。既然 GitHub Pages 已修好，这个坑不再影响主链路，除非未来主动想启用 EdgeOne。
 
-- 2026-07-03：在 Case Studies 板块加了"读书行动派"产品卡（Mac 窗口壳 Demo + 4项数据标签 + 双按钮CTA），代码已 push 到 GitHub 确认成功
+## 3. 已知内容改动（已确认线上生效）
+
+- 2026-07-03：Case Studies 板块加了"读书行动派"产品卡，已确认在 https://harryjzhang69-web.github.io/personal-site/ 上正常显示
 
 ## 3.5 仓库内藏的两个产品子页面（容易被漏看，2026-07-03 才重新发现）
 
@@ -41,15 +43,18 @@ CodeBuddy 里的 EdgeOne `deploy_folder` 工具，在当前环境下调用会报
 - 首页按钮直链到 `github.com/harryjzhang69-web/personal-site/tree/main/products/ai-bible` 供人下载
 - 跟独立的 `ai-study-app` 仓库是同一个产品，这里只是把发行版文件也放了一份在 personal-site 仓库里方便下载（有点冗余，两处都要同步更新才不会给出旧版本）
 
-**这两块内容能不能被外部人正常访问，取决于第1节说的部署问题**——如果 GitHub Pages 没刷新/EdgeOne 没配完，这两个子页面外部也大概率打不开或者是旧版本。
+这两块内容现在跟着 GitHub Pages 一起正常访问了（部署问题已在第0节修复）。
 
 ## 4. 技术栈 & 文件结构
 
 纯静态 HTML/CSS/JS，零依赖，设计参考 Linear。详见 `README.md`。
 
-## 5. 下次接手时该做的第一件事
+## 5. 日常更新流程（现在就是标准 git 工作流，不用再折腾别的）
 
-不要再假设"push 了就会自动生效"。先让用户去上面两个控制台各截一张图，根据实际情况判断是：
-(a) 修复 GitHub Pages 构建 ，还是
-(b) 重新走一遍 EdgeOne 手动部署，还是
-(c) 干脆两个都保留、其中一个当 staging
+```powershell
+cd c:\Users\Harryjzhang\CodeBuddy\Claw\personal_site
+git add .
+git commit -m "说明改了什么"
+git push
+```
+1-2 分钟后 https://harryjzhang69-web.github.io/personal-site/ 自动更新。**别删 `.nojekyll` 文件**。

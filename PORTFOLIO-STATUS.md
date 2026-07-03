@@ -12,7 +12,7 @@
 | 🔮 命由我造 Fortune AI | 懂你的 AI 命理树洞（八字+易经+对话） | [fortune-ai](https://github.com/harryjzhang69-web/fortune-ai) | 仅本地 CLI/API，**未部署公网** | 仓库内 `STATUS.md` |
 | 🎓 AI 学习宝典 | 离线 AI 全栈学习软件（驾考宝典式） | [ai-study-app](https://github.com/harryjzhang69-web/ai-study-app) | Windows 桌面 `.exe`，直接分发文件 | 仓库内 `STATUS.md` |
 | 🐱 坐姿监督员 | 摄像头AI坐姿监督 + 养成系桌宠 | [posture-guard](https://github.com/harryjzhang69-web/posture-guard) | Windows 桌面 `.exe`，直接分发文件 | 仓库内 `STATUS.md` |
-| 🌐 个人网站（本仓库） | 产品橱窗型个人品牌站 | [personal-site](https://github.com/harryjzhang69-web/personal-site) | ⚠️ 部署链路混乱未理清，见本仓库 `STATUS.md` | 仓库内 `STATUS.md` |
+| 🌐 个人网站（本仓库） | 产品橱窗型个人品牌站 | [personal-site](https://github.com/harryjzhang69-web/personal-site) | ✅ https://harryjzhang69-web.github.io/personal-site/ （已修复，push即自动更新） | 仓库内 `STATUS.md` |
 
 ## ⚠️ 藏在 personal-site 仓库里的两个"半成品子产品"（容易漏看，2026-07-03 发现）
 
