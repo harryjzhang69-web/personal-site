@@ -14,6 +14,15 @@
 | 🐱 坐姿监督员 | 摄像头AI坐姿监督 + 养成系桌宠 | [posture-guard](https://github.com/harryjzhang69-web/posture-guard) | Windows 桌面 `.exe`，直接分发文件 | 仓库内 `STATUS.md` |
 | 🌐 个人网站（本仓库） | 产品橱窗型个人品牌站 | [personal-site](https://github.com/harryjzhang69-web/personal-site) | ⚠️ 部署链路混乱未理清，见本仓库 `STATUS.md` | 仓库内 `STATUS.md` |
 
+## ⚠️ 藏在 personal-site 仓库里的两个"半成品子产品"（容易漏看，2026-07-03 发现）
+
+不是独立仓库，是 `personal-site/products/` 目录下的子页面，首页已经链接过去了：
+
+| 子产品 | 位置 | 状态 |
+|---|---|---|
+| 罗盘 · Compass | `personal-site/products/compass/` | 纯前端静态网页（易经起卦+AI对话），**AI对话是写死脚本，没接真实大模型**。跟「命由我造 Fortune AI」概念重合但代码不通用，需决定合并还是各自发展 |
+| AI 自测宝典下载区 | `personal-site/products/ai-bible/` | 只是把 `ai-study-app` 仓库的发行版 exe+资料又存了一份在这里方便下载，**跟独立仓库是同一产品，两处都要同步更新** |
+
 ## 资源管理原则（独立开发者标准做法）
 
 - **每个产品各自一个独立 GitHub 仓库**，不混在一起 —— 方便单独迭代、单独开源/私有、单独部署
