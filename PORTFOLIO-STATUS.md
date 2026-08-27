@@ -8,6 +8,7 @@
 
 | 产品 | 一句话定位 | 代码仓库 | 线上/分发方式 | 详细状态 |
 |---|---|---|---|---|
+| 🎯 AI PM 模拟面试官 | AI 扮演大厂面试官，会追问 + 出结构化面试报告，和 AI 自测宝典组成求职工具链 | [pm-interviewer](https://github.com/harryjzhang69-web/pm-interviewer)（待建） | 网页版全栈，目标 EdgeOne Pages（**待部署**）；本地 `pm-interviewer-eop/` 已完成，`node _serve_pm.js` 可预览 | 仓库内 `README.md` |
 | 📖 读书行动派 | 把一本书变成"跟你有关的启发+能立刻做的事" | [book-action-mvp](https://github.com/harryjzhang69-web/book-action-mvp) | 网页版，直连 `http://21.91.155.2:5800/`（推荐，零确认页）；也有 `https://harry-product.loca.lt`（好记名字但有确认页） | 仓库内 `STATUS.md` |
 | 🔮 命由我造 Fortune AI | 懂你的 AI 命理树洞（八字+易经+对话） | [fortune-ai](https://github.com/harryjzhang69-web/fortune-ai) | 仅本地 CLI/API，**未部署公网** | 仓库内 `STATUS.md` |
 | 🎓 AI 学习宝典 | 离线 AI 全栈学习软件（驾考宝典式） | [ai-study-app](https://github.com/harryjzhang69-web/ai-study-app) | Windows 桌面 `.exe`，直接分发文件 | 仓库内 `STATUS.md` |
