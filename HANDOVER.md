@@ -30,6 +30,7 @@
 | 5 | 读书行动派 Book Action | MVP 公测 | https://book-action-hdimehxt.edgeone.dev | `book-action-mvp`（HTML） |
 | 6 | AI PM 模拟面试官 | MVP 公测 | https://pm-mock-interview-exqcihvq.edgeone.dev | `pm-interviewer`（独立仓库）+ `personal-site/products/pm-interviewer`（随站镜像） |
 | 7 | AI 职场人格测试 Career Persona | MVP 公测 | https://career-persona-zvkhs7bt.edgeone.dev | `career-persona`（独立仓库，本地 `career-persona-eop/`） |
+| 8 | AI 简历诊断器 Resume Doctor | MVP 公测 | https://resume-doctor-5cc5rzsf.edgeone.dev | `resume-doctor`（独立仓库，本地 `resume-doctor-eop/`） |
 
 > 另有 `harry-agent-course` 仓库（本地目录 `agentcraft/`）是「Harry Agent 课程」，暂未在网站上架为产品卡片。
 
@@ -86,6 +87,7 @@ npx --yes edgeone@latest pages deploy . -n <项目名> -a overseas --json
 | 内容多面手 | content-creator | makers-2th2rehtra2b | overseas（.dev 公开）|
 | AI PM 面试官 | pm-mock-interview | makers-jom5ez82vory | overseas（.dev 公开）|
 | AI 职场人格测试 | career-persona | makers-sncqiwgt4rs8 | overseas（.dev 公开）|
+| AI 简历诊断器 | resume-doctor | makers-quqopdjvpkdz | overseas（.dev 公开）|
 
 > 注：曾建过 `book-action-mvp`(global,.cool) 和 `pm-interviewer`(global,.cool) 两个「需 token」的废项目，已弃用，可在控制台删除，不要用它们的地址。
 > ★ 部署新产品时若拿到 `.edgeone.cool` 域名（需 token）而非 `.edgeone.dev`，换一个项目名重新 deploy 一次通常就会给 `.dev` 公开域名。
@@ -115,6 +117,7 @@ git clone https://github.com/harryjzhang69-web/ai-study-app.git
 git clone https://github.com/harryjzhang69-web/harry-agent-course.git
 git clone https://github.com/harryjzhang69-web/pm-interviewer.git
 git clone https://github.com/harryjzhang69-web/career-persona.git
+git clone https://github.com/harryjzhang69-web/resume-doctor.git
 
 # 2. 改网站：编辑 personal-site/index.html → git push（见 3.4）
 # 3. 重新部署某个 AI 产品：进对应部署包目录跑 3.2 的命令
