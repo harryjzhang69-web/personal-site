@@ -28,7 +28,7 @@
 | 3 | AI 自测宝典 | 已上线 | GitHub 领取（35MB exe + 13 docx + 350 题） | `personal-site/products/ai-bible` + 独立仓库 `ai-study-app`（刷题软件源码） |
 | 4 | 内容多面手 Content Studio | MVP 公测 | https://content-creator-b2t3mvre.edgeone.dev | `content-creator-tool`（JS） |
 | 5 | 读书行动派 Book Action | MVP 公测 | https://book-action-hdimehxt.edgeone.dev | `book-action-mvp`（HTML） |
-| 6 | AI PM 模拟面试官 | MVP 公测 | https://pm-mock-interview-exqcihvq.edgeone.dev | `personal-site/products/pm-interviewer`（随站归档，无独立仓库） |
+| 6 | AI PM 模拟面试官 | MVP 公测 | https://pm-mock-interview-exqcihvq.edgeone.dev | `pm-interviewer`（独立仓库）+ `personal-site/products/pm-interviewer`（随站镜像） |
 
 > 另有 `harry-agent-course` 仓库（本地目录 `agentcraft/`）是「Harry Agent 课程」，暂未在网站上架为产品卡片。
 
@@ -46,7 +46,7 @@
 | `book_action_eop/` | （无独立 git，=部署包） | 读书行动派：EdgeOne 部署包 |
 | `content-creator-tool/` | `content-creator-tool` | 内容多面手：源码主仓 |
 | `content-creator-eop/` | （无独立 git，=部署包） | 内容多面手：EdgeOne 部署包 |
-| `pm-interviewer-eop/` | （无独立 git，已归档进 personal-site） | AI PM 面试官：EdgeOne 部署包 |
+| `pm-interviewer-eop/` | `pm-interviewer` | AI PM 面试官：源码主仓 + EdgeOne 部署包（也随站镜像在 personal-site/products/pm-interviewer） |
 | `agentcraft/` | `harry-agent-course` | Agent 课程 |
 | 坐姿监督员源码 | `posture-guard` | 本工作区无，只在 GitHub |
 | 罗盘完整版源码 | `fortune-ai` | 本工作区无，只在 GitHub |
@@ -110,22 +110,17 @@ git clone https://github.com/harryjzhang69-web/posture-guard.git
 git clone https://github.com/harryjzhang69-web/fortune-ai.git
 git clone https://github.com/harryjzhang69-web/ai-study-app.git
 git clone https://github.com/harryjzhang69-web/harry-agent-course.git
+git clone https://github.com/harryjzhang69-web/pm-interviewer.git
 
 # 2. 改网站：编辑 personal-site/index.html → git push（见 3.4）
 # 3. 重新部署某个 AI 产品：进对应部署包目录跑 3.2 的命令
 #    - 读书行动派：book-action-mvp 仓库里的 eop_deploy/ 就是部署包
 #    - 内容多面手：content-creator-tool 仓库（如无 eop 包，参考 personal-site 里的结构）
-#    - AI PM 面试官：personal-site/products/pm-interviewer/ 就是完整可部署源码
+#    - AI PM 面试官：pm-interviewer 仓库本身就是完整可部署源码（也在 personal-site/products/pm-interviewer/ 有镜像）
 # 4. 智谱 Key 已内置，部署完直接能用真实 AI
 ```
 
 ### 待办 / 已知缺口
-- [ ] AI PM 面试官暂无独立 GitHub 仓库（源码随 personal-site 归档在 `products/pm-interviewer/`）。如需独立仓库，在 GitHub 新建 `pm-interviewer` 空仓库后：
-  ```powershell
-  cd pm-interviewer-eop
-  git init -b main; git add -A; git commit -m "init pm-interviewer"
-  git remote add origin https://github.com/harryjzhang69-web/pm-interviewer.git
-  git push -u origin main
-  ```
+- [x] ~~AI PM 面试官独立仓库~~ 已建好：https://github.com/harryjzhang69-web/pm-interviewer （2026-08-28）
 - [ ] 三个公开产品的 `.dev` 域名在中国大陆会 401，若要面向大陆用户，需绑自定义域名。
 - [ ] 坐姿监督员成品 exe（395MB）走邮件分发，未在任何仓库；源码在 `posture-guard`。
