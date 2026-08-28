@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>AI PM 模拟面试官 · 真人式追问 + 面试报告</title>
+  <meta name="description" content="AI 扮演大厂产品面试官，按岗位与题型出题、像真面试官一样追问深挖，5 题后给出结构化面试报告与高分答题框架。产品经理 / AI 产品经理面试实战演练。" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="bg-decor" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+  </div>
+
+  <header class="site-head">
+    <div class="brand">
+      <span class="brand-glyph">面</span>
+      <div class="brand-txt">
+        <h1>AI PM 模拟面试官</h1>
+        <p>大厂面试官视角 · 会追问 · 给报告</p>
+      </div>
+    </div>
+    <a class="brand-back" href="https://harryjzhang69-web.github.io/personal-site/" target="_blank" rel="noopener">← Harry 的产品橱窗</a>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ 配置 ============ -->
+    <section id="setup" class="panel setup">
+      <div class="setup-intro">
+        <h2>先定一场面试</h2>
+        <p>选好岗位和题型，AI 会像真面试官一样出题、追问，结束后给你一份能对着改的评估报告。</p>
+      </div>
+
+      <div class="field">
+        <div class="field-label"><span class="field-num">01</span>面试岗位</div>
+        <div class="options" id="roleOptions">
+          <button class="opt active" data-value="ai-pm">
+            <strong>AI 产品经理</strong><span>大模型 / Agent / AI 功能</span>
+          </button>
+          <button class="opt" data-value="pm">
+            <strong>产品经理（通用）</strong><span>C 端 / B 端通用能力</span>
+          </button>
+          <button class="opt" data-value="data-pm">
+            <strong>数据产品经理</strong><span>指标体系 / 数据平台</span>
+          </button>
+          <button class="opt" data-value="strategy-pm">
+            <strong>策略产品经理</strong><span>推荐 / 增长 / 策略</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label"><span class="field-num">02</span>题型</div>
+        <div class="options" id="typeOptions">
+          <button class="opt active" data-value="product-design">
+            <strong>产品设计</strong><span>「设计一个 XX」</span>
+          </button>
+          <button class="opt" data-value="business-case">
+            <strong>商业 / Case</strong><span>要不要做 · 指标下跌</span>
+          </button>
+          <button class="opt" data-value="behavioral">
+            <strong>行为面试 BQ</strong><span>讲一段真实经历</span>
+          </button>
+          <button class="opt" data-value="ai-product">
+            <strong>AI 产品专项</strong><span>评测 · 幻觉 · 数据飞轮</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="startBtn" class="btn-primary btn-lg">开始面试 →</button>
+      <p class="setup-note">建议一次答一道题，答得越具体，面试官追问越到位、报告越准。</p>
+    </section>
+
+    <!-- ============ 面试对话 ============ -->
+    <section id="chat" class="panel chat hidden">
+      <div class="chat-bar">
+        <div class="chat-tags">
+          <span class="tag tag-role" id="tagRole">AI 产品经理</span>
+          <span class="tag tag-type" id="tagType">产品设计</span>
+        </div>
+        <div class="chat-progress">
+          <span id="progressText">第 1 问</span>
+          <button id="finishBtn" class="btn-ghost btn-xs">结束并看报告</button>
+        </div>
+      </div>
+
+      <div class="stream" id="stream"><!-- 气泡注入 --></div>
+
+      <div class="composer">
+        <textarea id="answerInput" rows="3" placeholder="在这里作答……（Ctrl / ⌘ + Enter 发送）"></textarea>
+        <div class="composer-row">
+          <span class="composer-hint" id="answerCount">0 字</span>
+          <button id="sendBtn" class="btn-primary btn-sm">提交回答</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 报告 ============ -->
+    <section id="report" class="panel report hidden">
+      <div class="report-head">
+        <div class="score-ring" id="scoreRing">
+          <span class="score-num" id="scoreNum">--</span>
+          <span class="score-cap">综合分</span>
+        </div>
+        <div class="report-head-txt">
+          <h2>面试评估报告</h2>
+          <p id="reportLevel" class="report-level">——</p>
+          <div class="report-tags">
+            <span class="tag tag-role" id="rptRole">岗位</span>
+            <span class="tag tag-type" id="rptType">题型</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dims" id="dims"><!-- 维度条 --></div>
+
+      <div class="report-grid">
+        <div class="rcard rcard-good">
+          <h3>✦ 亮点</h3>
+          <ul id="highlights"></ul>
+        </div>
+        <div class="rcard rcard-bad">
+          <h3>△ 待改进</h3>
+          <ul id="weaknesses"></ul>
+        </div>
+      </div>
+
+      <div class="rcard rcard-sug">
+        <h3>↗ 立刻可做的 3 条建议</h3>
+        <ol id="suggestions"></ol>
+      </div>
+
+      <div class="rcard rcard-model">
+        <h3>◎ 高分答题框架（核心题）</h3>
+        <p id="modelAnswer"></p>
+      </div>
+
+      <div class="report-cta">
+        <button id="againBtn" class="btn-primary btn-lg">再来一场 →</button>
+        <a class="btn-ghost btn-lg" href="https://github.com/harryjzhang69-web/ai-study-app" target="_blank" rel="noopener">配套「AI 自测宝典」补基础 →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <p>AI PM 模拟面试官 · 智谱免费模型驱动 · MVP 公测</p>
+    <p>题库与评判标准源自清华 + 大厂 PM / AI PM 转型真实经验 · by <a href="https://harryjzhang69-web.github.io/personal-site/" target="_blank" rel="noopener">Harry</a></p>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>

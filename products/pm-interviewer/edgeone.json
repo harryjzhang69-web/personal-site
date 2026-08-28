@@ -1,0 +1,6 @@
+{
+  "name": "pm-interviewer",
+  "cloudFunctions": {
+    "maxDuration": 120
+  }
+}
