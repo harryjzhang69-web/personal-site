@@ -94,8 +94,8 @@ push成功了）但实际上从来没有真正部署上去。
   仓库根目录（可能被误删、或被某次 `.gitignore` 规则误伤）
 
 **曾经尝试的应急方案（已弃用，仅存档）**：
-- 在Jekyll问题修复前，为了让效果立刻可见，把网站临时也部署到AnyDev服务器
-  `http://21.91.155.2:8090/`（`python3 -m http.server`），非持久化，服务器重启即挂。
+- 在Jekyll问题修复前，为了让效果立刻可见，曾把网站临时挂到一台旧云服务器的静态端口上
+  （`python3 -m http.server`），非持久化，服务器重启即挂。
   Jekyll问题修好后不再需要，但进程可能还占用着8090端口没清理。
 - README里一度写着"正式方案是EdgeOne Pages"，链接 `harry-site.edgeone.app`，
   但这个链接从第一次提交到最后都只是占位符，从未真正部署成功过——CodeBuddy
@@ -106,8 +106,7 @@ push成功了）但实际上从来没有真正部署上去。
   详见 `book-action-mvp` 仓库的 `BUILD-LOG.md` 阶段三。）
 
 **读书行动派链接的三次演变**（`460bb4c` → `a4f38ff` → `9ea57e8`）：
-1. 一开始按钮指向已失效的localtunnel链接（`harry-product.loca.lt`），修复为
-   AnyDev内网直连IP `http://21.91.155.2:5800/`
+1. 一开始按钮指向已失效的localtunnel链接（`harry-product.loca.lt`），后来临时改为旧服务器直连地址
 2. 后改为"GitHub联动模式"：页面内嵌 `products/book-action/index.html` 子页面，
    通过CORS跨域调用AnyDev后端API
 3. 最终（2026-07-10）确认内网IP从来没有真正对外公开过（三个公网检测节点全部
