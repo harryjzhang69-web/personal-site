@@ -142,7 +142,7 @@
       <span>🧬 4 维度原创模型</span><span>🤖 AI 实时生成报告</span><span>📸 结果可截图晒</span>
     </div>
     <button class="start-btn" onclick="startQuiz()">开始测试 · 约 90 秒</button>
-    <p class="meta">已有 <b id="fakeCount">2,847</b> 人测过自己的 AI 职场人格</p>
+    <p class="meta">已有 <b id="visitorCount">2,847</b> 人测过自己的 AI 职场人格</p>
   </section>
 
   <!-- 答题 -->
@@ -220,47 +220,6 @@
 <div class="toast" id="toast">已复制</div>
 
 <script>
-const DEMO_PERSONA_MAP = {
-  maker: {
-    persona_name: "独狼造物者",
-    tagline: "我不卷，我只是让 AI 替我卷。",
-    type_code: "MKR-AI",
-    traits: ["行动快", "做中学", "工具感强", "结果导向"],
-    strengths: [
-      "你最大的优势是能把想法迅速变成能跑的东西，不会一直卡在想象层。",
-      "面对新工具和新变化，你的学习门槛很低，适合率先把 AI 变成生产力。",
-      "你天然适合做小项目、原型验证和副业试错，启动速度比很多人快。"
-    ],
-    blindspots: [
-      "容易闷头猛冲，忽略和团队同步，最后做出来的东西别人接不住。",
-      "一旦项目进入收尾、复盘、标准化阶段，你可能会失去耐心。",
-      "太依赖“先做再说”时，容易低估长期维护成本。"
-    ],
-    ai_advice: "最适合你的路线不是做“最懂理论的人”，而是做“最先把 AI 用起来并拿结果的人”。把你会的东西产品化、模板化、案例化，会比单纯学更多工具更值钱。",
-    suit_side_hustle: "最适合你的 AI 副业：做 AI 效率工具流、模板包、轻量产品或垂直场景小应用。",
-    one_liner: "你不是在适应 AI 时代，你是在把 AI 时代先做出来。"
-  },
-  connector: {
-    persona_name: "协同放大器",
-    tagline: "我不一定最会做，但我最会把人和资源接起来。",
-    type_code: "CNT-LINK",
-    traits: ["连接力", "推进感", "共创型", "组织敏感"],
-    strengths: [
-      "你对人和协作的敏感度很高，擅长把零散资源拧成一个完整动作。",
-      "你比很多人更适合做跨团队项目、内容共创和社群协同。",
-      "AI 对你最大的价值不是替你做完，而是放大你的组织与链接能力。"
-    ],
-    blindspots: [
-      "容易为了照顾所有人而拉长决策路径，自己承担过多协调成本。",
-      "如果缺少明确边界，你会把很多事都揽到自己身上。",
-      "太依赖外部反馈时，可能会弱化个人作品和硬输出。"
-    ],
-    ai_advice: "你最该用 AI 的地方，是把沟通和组织成本压下来：会议纪要、访谈整理、提案草稿、内容协作流程，都能变成你的效率杠杆。",
-    suit_side_hustle: "最适合你的 AI 副业：AI 社群、顾问撮合、陪跑服务、内容协作型业务。",
-    one_liner: "你真正的竞争力，不是自己做完，而是让更多人一起把事做成。"
-  }
-};
-
 // ===== 12 道题：每题选项带 4 维度增量 D/E/A/F =====
 // D 造物者(+)/连接者(-)  E 冒险(+)/稳健(-)  A 驾驭AI(+)/协作AI(-)  F 深潜(+)/广联(-)
 const QUESTIONS = [
@@ -394,21 +353,6 @@ function tendencyText(){
   return map.join('，');
 }
 
-function buildDemoPersona(){
-  const base = scores.D >= 0 ? DEMO_PERSONA_MAP.maker : DEMO_PERSONA_MAP.connector;
-  const deepDive = scores.F >= 0 ? '你更偏深潜专精，适合把一个小切口做到别人替代不了。' : '你更偏跨界连接，适合把不同资源和场景串成新机会。';
-  const riskText = scores.E >= 0 ? '你的冒险阈值比较高，适合边做边迭代，但要记得补复盘。' : '你的稳健感更强，适合做可复用、可复制、可持续的路线。';
-  const aiText = scores.A >= 0 ? '你对 AI 的天然姿势是“驾驭工具”，更像操盘手。' : '你对 AI 的天然姿势是“协作共创”，更像放大器。';
-  return {
-    ...base,
-    traits: [...base.traits, scores.F >= 0 ? '深潜型' : '跨界型'],
-    strengths: [...base.strengths, aiText],
-    blindspots: [...base.blindspots, riskText],
-    ai_advice: `${base.ai_advice} ${deepDive}`,
-    one_liner: `${base.one_liner} ${riskText}`
-  };
-}
-
 async function finish(){
   $('progressFill').style.width='100%';
   $('quiz').style.display='none';
@@ -425,8 +369,9 @@ async function finish(){
     if(j.code!==0) throw new Error(j.message||'生成失败');
     renderResult(j.data);
   }catch(e){
-    renderResult(buildDemoPersona());
-    showToast('分析服务暂不可用，已切到演示模式');
+    $('loading').style.display='none';
+    $('err').style.display='block';
+    $('errTxt').textContent='当前公开服务未稳定开放，请稍后再试或先查看 GitHub 源码';
   }
 }
 
@@ -496,7 +441,7 @@ function restart(){
 // 轻量动态计数，营造真实感（本地随机，非真实统计）
 (function(){
   const base=2847+Math.floor((Date.now()/8.64e7)%1*30);
-  $('fakeCount').textContent=base.toLocaleString();
+  $('visitorCount').textContent=base.toLocaleString();
 })();
 </script>
 </body>

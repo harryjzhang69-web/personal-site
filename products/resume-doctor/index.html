@@ -216,45 +216,6 @@ const $=(id)=>document.getElementById(id);
 $('resume').addEventListener('input',()=>{ $('charhint').textContent=$('resume').value.length+' 字'; });
 
 let lastReport=null;
-function getDemoReport(resume,target){
-  const excerpt = resume.split('\n').map(s=>s.trim()).filter(Boolean)[0] || '有项目经历，但表达偏执行层';
-  const targetLabel = target || '当前目标岗位';
-  return {
-    overall_score: 62,
-    one_line_verdict: `有基础经历，但“结果不够量化 + 关键词不够聚焦”，在 ${targetLabel} 初筛里还不够稳。`,
-    dimensions: [
-      { name:'价值表达', score:58, comment:'写了做过什么，但还没讲清楚做成了什么、带来了什么结果。' },
-      { name:'量化程度', score:47, comment:'缺少数据、规模、增量、效率提升等量化证据。' },
-      { name:'岗位相关性', score:68, comment:`和 ${targetLabel} 有相关经历，但关键词和案例还可以更贴近岗位语言。` },
-      { name:'结构清晰度', score:73, comment:'整体可读，但亮点不够前置，招聘官容易快速扫过。' }
-    ],
-    fatal_issues: [
-      `原文像“${excerpt.slice(0,48)}${excerpt.length>48?'…':''}”这样的表述偏泛，没有突出动作、结果和影响。`,
-      '多处用“参与、负责、协助”开头，默认把自己放在执行位，不利于争取更高岗位判断。',
-      '如果目标岗位明确，简历顶部还需要主动贴岗位关键词，而不是等招聘官自己猜。'
-    ],
-    rewrites: [
-      {
-        before:'参与公司某项目的需求分析与上线推进。',
-        after:'主导某项目需求分析与 PRD 输出，推进 2 个版本上线，缩短需求确认周期 30%。'
-      },
-      {
-        before:'负责内容运营和用户增长相关工作。',
-        after:'负责内容运营与增长实验，3 个月内把核心渠道转化率从 2.1% 提升到 3.8%。'
-      }
-    ],
-    match: {
-      has_target: Boolean(target),
-      score: target ? 71 : null,
-      missing: target ? ['量化结果', '岗位关键词', '代表性项目标题前置'] : []
-    },
-    quick_wins: [
-      '先把每段经历改成“动作 + 结果 + 数字”结构，优先修最核心的 2 段。',
-      `针对 ${targetLabel} 补 3 个高频关键词，放进标题、摘要或项目描述里。`,
-      '把最强项目挪到前面，让招聘官在前 8 秒先看到你的最佳证据。'
-    ]
-  };
-}
 
 async function diagnose(){
   const resume=$('resume').value.trim();
@@ -272,8 +233,9 @@ async function diagnose(){
     if(j.code!==0) throw new Error(j.message||'诊断失败');
     render(j.data,target);
   }catch(e){
-    render(getDemoReport(resume,target),target);
-    showToast('诊断服务暂不可用，已切到演示模式');
+    $('loading').style.display='none';
+    $('err').style.display='block';
+    $('errTxt').textContent='当前公开服务未稳定开放，请稍后再试或先查看 GitHub 源码';
   }
 }
 

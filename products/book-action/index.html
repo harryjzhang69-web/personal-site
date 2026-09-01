@@ -485,92 +485,10 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// 公开演示页优先保证“任何人都能打开并体验”，即使远端服务偶发 401 / 未部署，也要能回退到站内演示模式。
+// 当前页面只接受真实后端结果，不再使用预置演示数据兜底。
 const API_BASE = 'https://farrahli-59gv2jsp.edgeone.app';
 let coverBase64 = null;
 let lastResultData = null;
-const DEMO_RESULT = {
-  title: '非暴力沟通',
-  author: '马歇尔·卢森堡',
-  author_background: '马歇尔·卢森堡是国际知名心理学家与沟通专家，长期研究冲突化解与同理心沟通。这本书想解决的核心问题，是人们在表达需求时常常陷入评判、指责与防御。',
-  core_thesis: '真正有效的沟通，不是“说服对方”，而是先把观察、感受、需要和请求分开表达。很多关系的恶化，并非因为立场不同，而是因为表达方式让彼此只能进入防御模式。',
-  known_confidence: 'high',
-  cache_hit: false,
-  demo_mode: true,
-  book_structure: [
-    '先解释为什么日常语言里充满评判、命令和贴标签，这些表达会天然激起防御与对抗。',
-    '接着提出“观察、感受、需要、请求”四步框架，帮助人把冲突从情绪对撞拉回真实需求。',
-    '然后用亲密关系、职场协作、教育场景等例子，说明同理心不是软弱，而是更高效的连接方式。',
-    '最后强调非暴力沟通不是话术技巧，而是一种持续练习的思维方式：先看见人，再处理问题。'
-  ],
-  key_points: [
-    {
-      point: '观察先于评判',
-      explain: '书里反复强调，把“事实”与“判断”混在一起，是冲突升级的起点。比如“你迟到了20分钟”是观察，“你根本不尊重我”是评判；后者会让沟通迅速进入对抗。'
-    },
-    {
-      point: '感受要自己承担',
-      explain: '很多人会把自己的情绪直接归因给对方，比如“你让我很生气”。作者认为更有效的表达是先承认自己的感受，再去理解背后的未满足需要，这样沟通才有可能继续。'
-    },
-    {
-      point: '需求比立场重要',
-      explain: '很多冲突表面看是意见不同，本质往往是双方都在用立场保护自己的需要。只要能把“我真正想要什么”说出来，问题就从对抗转向协商。'
-    },
-    {
-      point: '请求要具体可执行',
-      explain: '“希望你以后上点心”这种表达太抽象，既无法执行，也容易让人困惑。书里强调好的请求必须具体、清晰、能被对方理解并回应。'
-    }
-  ],
-  notable_example: '书中常用亲密关系冲突举例：同一句抱怨，如果换成“我看到的是……，我现在感到……，因为我需要……，所以我想请你……”的结构，争吵会明显降温。',
-  deep_analysis: '如果你现在最头疼的是“明明自己是为项目好，但一沟通就容易把关系搞僵”，这本书最该借你的，是“观察先于评判”和“请求要具体可执行”这两个观点。很多需求讨论并不是能力问题，而是我们一开口就在给对方下定义，比如“你们又不理解业务”，这会让研发先进入防御，再谈方案。换成“这个需求今天被退回了两次，我担心排期继续拖延，我需要我们先对齐验收口径，今晚能不能一起把3个分歧点写清楚”，沟通立刻会从情绪对撞，变成问题共解。',
-  insight_for_you: [
-    '“观察先于评判”对应的是你在协作里最容易踩的坑：一着急就把事实升级成对人的判断，导致讨论跑偏。',
-    '“需求比立场重要”提醒你，很多争执并不是对方不配合，而是双方都没把真正担心的目标说透。',
-    '“请求要具体可执行”可以直接改造你的表达方式：从抽象抱怨，变成能推进项目的明确动作。'
-  ],
-  action_checklist: [
-    {
-      action: '把最近一次沟通翻车的对话写下来',
-      why: '先拆出“事实”和“评判”，你才会看见冲突到底卡在了哪一步。'
-    },
-    {
-      action: '把“你们总是”改写成客观观察句',
-      why: '这是把对抗情绪拉回问题本身的第一步，能明显降低对方防御。'
-    },
-    {
-      action: '每次提需求前先写清你的真实需要',
-      why: '你真正想要的是效率、质量还是排期，想清楚后表达会更稳。'
-    },
-    {
-      action: '把请求改成今天就能执行的动作',
-      why: '越具体，对方越容易响应，沟通也越容易从争论转向推进。'
-    }
-  ],
-  one_line_takeaway: '别急着证明自己是对的，先把事实、需要和请求说清楚。',
-  share_hook: '吵架前先看这本',
-  persona_tag: '沟通破局者'
-};
-
-function getFallbackReason(err, status){
-  if (status === 401) return '公开服务当前受权限保护，已自动切换为演示模式';
-  if (err && /Failed to fetch|NetworkError|Load failed/i.test(err.message || '')) return '公开服务暂时不可达，已自动切换为演示模式';
-  return '服务暂时不可用，已自动切换为演示模式';
-}
-
-function getDemoResult(title, author, question){
-  const data = JSON.parse(JSON.stringify(DEMO_RESULT));
-  if (title) data.title = title;
-  if (author) data.author = author;
-  if (question) {
-    data.deep_analysis = `你当前最需要的不是再看一篇标准化书摘，而是把书里的方法直接映射到自己的场景里。以“${data.title}”为例，演示版会优先把核心观点翻译成你当下能执行的动作：先分清事实与判断，再把含糊抱怨改成具体请求。这样你拿到的不是“读后感”，而是一套可以马上落地的小动作。正式版恢复后，会继续基于你的身份和问题做更细的个性化生成。`;
-    data.insight_for_you = [
-      `你输入的问题是“${question.slice(0, 26)}${question.length > 26 ? '…' : ''}”，说明你需要的是场景化建议，而不是泛泛讲书。`,
-      '演示版先给你看“书籍观点如何落到动作”这件事，确保公开入口始终可用。',
-      '正式服务恢复后，同样的输入会得到更细的角色化解读和更贴身的行动清单。'
-    ];
-  }
-  return data;
-}
 
 function switchTab(tab){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
@@ -657,11 +575,11 @@ async function identifyCover(){
       body: JSON.stringify({cover_image: coverBase64})
     });
     if(resp.status === 401){
-      idLabel.textContent = '识别结果（公开演示版暂不支持封面识别，请手动输入）';
+      idLabel.textContent = '识别结果（服务暂不可用，请手动输入）';
       idTitle.value = '';
       idTitle.placeholder = '请手动输入书名';
       idAuthor.value = '';
-      showToast('封面识别服务暂不可用，请先用公开演示版体验');
+      showToast('封面识别服务暂不可用，请手动输入书名');
       return;
     }
     const data = await resp.json();
@@ -756,8 +674,7 @@ async function generate(){
       method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
     });
     if(resp.status === 401){
-      renderResult(getDemoResult(title, author, payload.question));
-      showToast(getFallbackReason(null, 401));
+      showError('当前公开服务未开放访问，请稍后再试或先查看 GitHub 源码');
       return;
     }
     const data = await resp.json();
@@ -767,8 +684,7 @@ async function generate(){
     }
     renderResult(data);
   }catch(err){
-    renderResult(getDemoResult(title, author, payload.question));
-    showToast(getFallbackReason(err));
+    showError('当前公开服务不可用，请稍后再试或先查看 GitHub 源码');
   }finally{
     document.getElementById('submitBtn').disabled = false;
     document.getElementById('loadingBox').style.display = 'none';
@@ -792,9 +708,6 @@ function renderResult(data){
   lastResultData = data;
   const badgeRow = document.getElementById('badgeRow');
   badgeRow.innerHTML = '';
-  if(data.demo_mode){
-    badgeRow.innerHTML += `<span class="badge demo">演示模式</span>`;
-  }
   badgeRow.innerHTML += data.cache_hit
     ? `<span class="badge cache">⚡ 缓存命中</span>`
     : `<span class="badge fresh">首次解读</span>`;
