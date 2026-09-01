@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 简历诊断器 · 招聘官视角的简历体检</title>
+<meta name="description" content="贴上简历，AI 用大厂招聘官视角给你打分、揪出致命问题、给改写对照和岗位匹配度。8 秒决定的初筛，先让 AI 帮你过一遍。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
+<style>
+  :root{
+    --bg:#0a0d14; --bg2:#0f131d; --surface:#141a26; --surface2:#1b2231;
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+    --ink:#eef2f8; --ink2:#aeb6c8; --sub:#79839a; --faint:#525c72;
+    --blue:#4a9eff; --blue2:#6bb3ff; --green:#3ddc97; --amber:#ffc861; --red:#ff6b81;
+    --grad:linear-gradient(135deg,#4a9eff 0%,#3ddc97 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1000px 600px at 50% -8%,#122033 0%,var(--bg) 55%);
+    color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;padding-bottom:60px;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
+  .backlink{display:inline-flex;gap:6px;align-items:center;color:var(--sub);text-decoration:none;font-size:13px;padding:18px 2px 0;}
+  .backlink:hover{color:var(--ink2);}
+
+  .hero{padding:34px 0 18px;text-align:center;}
+  .badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.08em;
+    color:var(--blue2);background:rgba(74,158,255,.12);border:1px solid rgba(74,158,255,.28);padding:6px 14px;border-radius:100px;margin-bottom:20px;}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{font-size:31px;line-height:1.25;font-weight:800;margin-bottom:14px;}
+  .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero p{color:var(--ink2);font-size:15px;line-height:1.7;}
+  .hero p b{color:var(--ink);}
+
+  .form{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;}
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:9px;}
+  .field label .opt{color:var(--faint);font-weight:400;}
+  textarea{width:100%;background:var(--bg2);border:1.5px solid var(--line);border-radius:12px;color:var(--ink);
+    font-size:14px;line-height:1.6;padding:14px;resize:vertical;min-height:180px;font-family:inherit;transition:border-color .15s;}
+  textarea:focus{outline:none;border-color:var(--blue);}
+  input[type=text]{width:100%;background:var(--bg2);border:1.5px solid var(--line);border-radius:12px;color:var(--ink);
+    font-size:14px;padding:13px 14px;font-family:inherit;transition:border-color .15s;}
+  input[type=text]:focus{outline:none;border-color:var(--blue);}
+  .charhint{text-align:right;font-size:12px;color:var(--faint);margin-top:6px;}
+  .submit{width:100%;margin-top:6px;border:none;cursor:pointer;background:var(--grad);color:#08111a;font-weight:800;
+    font-size:16px;padding:16px;border-radius:14px;box-shadow:0 12px 28px -10px rgba(74,158,255,.55);transition:transform .15s;}
+  .submit:hover{transform:translateY(-2px);} .submit:active{transform:translateY(0);}
+  .submit:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+  .privacy{text-align:center;font-size:12px;color:var(--faint);margin-top:14px;line-height:1.6;}
+
+  .loading{display:none;padding:70px 0;text-align:center;}
+  .spinner{width:50px;height:50px;margin:0 auto 24px;border-radius:50%;border:3px solid var(--surface2);border-top-color:var(--blue);animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading p{color:var(--ink2);font-size:15px;} .loading .sub{color:var(--faint);font-size:13px;margin-top:8px;}
+
+  .result{display:none;padding:16px 0;}
+  /* 总分 */
+  .scorecard{background:linear-gradient(160deg,#16202f 0%,#111722 100%);border:1px solid var(--line2);border-radius:22px;padding:28px 24px;display:flex;gap:22px;align-items:center;position:relative;overflow:hidden;}
+  .ring{--p:0;flex-shrink:0;width:104px;height:104px;border-radius:50%;
+    background:conic-gradient(var(--rc,var(--blue)) calc(var(--p)*1%),var(--surface2) 0);
+    display:flex;align-items:center;justify-content:center;position:relative;}
+  .ring::before{content:"";position:absolute;inset:9px;border-radius:50%;background:#111722;}
+  .ring .sc{position:relative;font-size:32px;font-weight:900;}
+  .ring .sc small{font-size:14px;color:var(--sub);font-weight:600;}
+  .scoremeta{flex:1;}
+  .scoremeta .lb{font-size:12px;letter-spacing:.12em;color:var(--blue2);font-weight:600;margin-bottom:8px;}
+  .scoremeta .verdict{font-size:17px;font-weight:700;line-height:1.5;}
+
+  .dims{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px;}
+  .dim{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 15px;}
+  .dim-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+  .dim-name{font-size:13px;font-weight:600;color:var(--ink2);}
+  .dim-score{font-size:18px;font-weight:800;}
+  .dim-bar{height:5px;background:var(--surface2);border-radius:100px;overflow:hidden;margin-bottom:9px;}
+  .dim-bar i{display:block;height:100%;border-radius:100px;}
+  .dim-cmt{font-size:12px;color:var(--sub);line-height:1.5;}
+
+  .sec{margin-top:24px;}
+  .sec-h{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;margin-bottom:14px;}
+  .sec-h .ic{width:24px;height:24px;border-radius:7px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:14px;}
+  .fatal{display:flex;flex-direction:column;gap:11px;}
+  .fatal .row{display:flex;gap:11px;background:rgba(255,107,129,.07);border:1px solid rgba(255,107,129,.25);border-radius:13px;padding:14px 15px;font-size:14px;line-height:1.55;color:var(--ink2);}
+  .fatal .row .mk{color:var(--red);font-weight:800;flex-shrink:0;}
+  .rw{display:flex;flex-direction:column;gap:14px;}
+  .rw-item{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .rw-before,.rw-after{padding:13px 15px;font-size:14px;line-height:1.55;}
+  .rw-before{color:var(--sub);border-bottom:1px dashed var(--line2);}
+  .rw-before .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--red);margin-right:8px;}
+  .rw-after{color:var(--ink);} .rw-after .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--green);margin-right:8px;}
+  .match-box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 16px;}
+  .match-box .mr{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;}
+  .match-box .mr .n{font-size:26px;font-weight:900;color:var(--blue2);}
+  .match-box .mr .l{font-size:13px;color:var(--sub);}
+  .miss{display:flex;flex-wrap:wrap;gap:8px;}
+  .miss span{font-size:12px;color:var(--amber);background:rgba(255,200,97,.1);border:1px solid rgba(255,200,97,.28);padding:5px 11px;border-radius:100px;}
+  .qw{display:flex;flex-direction:column;gap:10px;}
+  .qw .row{display:flex;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-size:14px;color:var(--ink2);}
+  .qw .row .mk{color:var(--green);font-weight:800;flex-shrink:0;}
+
+  .actions{display:flex;flex-direction:column;gap:11px;margin-top:26px;}
+  .btn{border:none;cursor:pointer;font-size:15px;font-weight:700;padding:15px;border-radius:14px;text-decoration:none;text-align:center;display:block;transition:transform .15s;}
+  .btn:active{transform:scale(.98);}
+  .btn-main{background:var(--grad);color:#08111a;}
+  .btn-ghost{background:var(--surface2);color:var(--ink2);border:1px solid var(--line);}
+  .btn-row{display:flex;gap:11px;} .btn-row .btn{flex:1;}
+  .crosslink{margin-top:22px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;text-align:center;}
+  .crosslink p{font-size:13px;color:var(--sub);margin-bottom:10px;line-height:1.5;}
+  .crosslink a{color:var(--blue2);text-decoration:none;font-size:14px;font-weight:600;display:block;margin-top:6px;}
+  .crosslink a:hover{text-decoration:underline;}
+  .foot{text-align:center;color:var(--faint);font-size:12px;margin-top:32px;line-height:1.7;}
+  .foot a{color:var(--sub);text-decoration:none;}
+  .err{display:none;text-align:center;padding:40px 0;color:var(--red);font-size:14px;}
+  .toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(20px);opacity:0;background:#fff;color:#111;font-size:13px;font-weight:600;padding:11px 20px;border-radius:100px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:all .3s;pointer-events:none;z-index:99;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media(max-width:480px){.dims{grid-template-columns:1fr;}.scorecard{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="../../index.html">← Harry 的产品橱窗</a>
+
+  <section class="hero" id="hero">
+    <div class="badge"><span class="dot"></span>AI RESUME DOCTOR · 招聘官视角</div>
+    <h1>你的简历，<span class="g">能过初筛吗？</span></h1>
+    <p>招聘官平均 <b>8 秒</b>决定一份简历的去留。<br>先让 AI 用招聘官的眼光，帮你把简历<b>体检</b>一遍——<br>打分、揪致命伤、给改写对照、算岗位匹配度。</p>
+
+    <div class="form" id="form">
+      <div class="field">
+        <label>① 粘贴你的简历内容 <span class="opt">（越完整越准，隐私内容可先删）</span></label>
+        <textarea id="resume" placeholder="把简历里的经历、项目、技能粘贴进来。例如：&#10;- 负责公司新媒体账号的日常运营&#10;- 参与了XX产品的需求分析和上线&#10;……"></textarea>
+        <div class="charhint" id="charhint">0 字</div>
+      </div>
+      <div class="field">
+        <label>② 目标岗位 <span class="opt">（选填，填了会算匹配度）</span></label>
+        <input type="text" id="target" placeholder="例如：AI 产品经理 / 数据分析师 / 新媒体运营">
+      </div>
+      <button class="submit" id="submitBtn" onclick="diagnose()">🩺 开始诊断我的简历</button>
+      <p class="privacy">🔒 内容仅用于本次诊断，不存储、不上传第三方 · 结果由 AI 生成仅供参考</p>
+    </div>
+  </section>
+
+  <section class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>AI 招聘官正在审阅你的简历…</p>
+    <p class="sub">打分 · 揪致命伤 · 生成改写对照</p>
+  </section>
+
+  <section class="result" id="result">
+    <div class="scorecard">
+      <div class="ring" id="ring"><div class="sc" id="ringScore">0<small>分</small></div></div>
+      <div class="scoremeta">
+        <div class="lb">简历初筛评分</div>
+        <div class="verdict" id="verdict">—</div>
+      </div>
+    </div>
+    <div class="dims" id="dims"></div>
+
+    <div class="sec">
+      <div class="sec-h"><span class="ic">💀</span>致命伤（先改这些）</div>
+      <div class="fatal" id="fatal"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><span class="ic">✍️</span>改写对照（照着改）</div>
+      <div class="rw" id="rewrites"></div>
+    </div>
+
+    <div class="sec" id="matchSec" style="display:none;">
+      <div class="sec-h"><span class="ic">🎯</span>与目标岗位的匹配度</div>
+      <div class="match-box">
+        <div class="mr"><span class="n" id="matchScore">—</span><span class="l">岗位匹配度</span></div>
+        <p style="font-size:13px;color:var(--sub);margin-bottom:10px;">还缺这些关键词 / 经历：</p>
+        <div class="miss" id="miss"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><span class="ic">⚡</span>今天就能改的 3 件事</div>
+      <div class="qw" id="quickwins"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-main" onclick="copyReport()">📋 复制诊断报告</button>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="restart()">🔄 改完再测一次</button>
+        <a class="btn btn-ghost" href="https://harryjzhang69-web.github.io/personal-site/" target="_blank" rel="noopener">更多 AI 工具</a>
+      </div>
+    </div>
+
+    <div class="crosslink">
+      <p>简历改好了，下一步是面试。这套求职工具链一起用效果最好：</p>
+      <a href="../pm-interviewer/index.html">🎙️ AI PM 模拟面试官 · 继续练面试 →</a>
+      <a href="../ai-bible/">📚 AI 学习宝典 · 补 AI 知识底子 →</a>
+    </div>
+
+    <p class="foot">
+      by <a href="https://harryjzhang69-web.github.io/personal-site/" target="_blank" rel="noopener">Harry · AI 产品手艺人</a><br>
+      AI 生成的诊断仅供参考，最终以你的判断为准
+    </p>
+  </section>
+
+  <section class="err" id="err">
+    <p id="errTxt">出了点问题，请重试</p>
+    <button class="btn btn-ghost" style="max-width:200px;margin:20px auto 0;" onclick="restart()">返回重试</button>
+  </section>
+</div>
+<div class="toast" id="toast">已复制</div>
+
+<script>
+const $=(id)=>document.getElementById(id);
+$('resume').addEventListener('input',()=>{ $('charhint').textContent=$('resume').value.length+' 字'; });
+
+let lastReport=null;
+function getDemoReport(resume,target){
+  const excerpt = resume.split('\n').map(s=>s.trim()).filter(Boolean)[0] || '有项目经历，但表达偏执行层';
+  const targetLabel = target || '当前目标岗位';
+  return {
+    overall_score: 62,
+    one_line_verdict: `有基础经历，但“结果不够量化 + 关键词不够聚焦”，在 ${targetLabel} 初筛里还不够稳。`,
+    dimensions: [
+      { name:'价值表达', score:58, comment:'写了做过什么，但还没讲清楚做成了什么、带来了什么结果。' },
+      { name:'量化程度', score:47, comment:'缺少数据、规模、增量、效率提升等量化证据。' },
+      { name:'岗位相关性', score:68, comment:`和 ${targetLabel} 有相关经历，但关键词和案例还可以更贴近岗位语言。` },
+      { name:'结构清晰度', score:73, comment:'整体可读，但亮点不够前置，招聘官容易快速扫过。' }
+    ],
+    fatal_issues: [
+      `原文像“${excerpt.slice(0,48)}${excerpt.length>48?'…':''}”这样的表述偏泛，没有突出动作、结果和影响。`,
+      '多处用“参与、负责、协助”开头，默认把自己放在执行位，不利于争取更高岗位判断。',
+      '如果目标岗位明确，简历顶部还需要主动贴岗位关键词，而不是等招聘官自己猜。'
+    ],
+    rewrites: [
+      {
+        before:'参与公司某项目的需求分析与上线推进。',
+        after:'主导某项目需求分析与 PRD 输出，推进 2 个版本上线，缩短需求确认周期 30%。'
+      },
+      {
+        before:'负责内容运营和用户增长相关工作。',
+        after:'负责内容运营与增长实验，3 个月内把核心渠道转化率从 2.1% 提升到 3.8%。'
+      }
+    ],
+    match: {
+      has_target: Boolean(target),
+      score: target ? 71 : null,
+      missing: target ? ['量化结果', '岗位关键词', '代表性项目标题前置'] : []
+    },
+    quick_wins: [
+      '先把每段经历改成“动作 + 结果 + 数字”结构，优先修最核心的 2 段。',
+      `针对 ${targetLabel} 补 3 个高频关键词，放进标题、摘要或项目描述里。`,
+      '把最强项目挪到前面，让招聘官在前 8 秒先看到你的最佳证据。'
+    ]
+  };
+}
+
+async function diagnose(){
+  const resume=$('resume').value.trim();
+  const target=$('target').value.trim();
+  if(resume.length<20){ alert('简历内容太短了，多贴一些再诊断（至少 20 字）'); return; }
+  $('hero').style.display='none';
+  $('loading').style.display='block';
+  window.scrollTo(0,0);
+  try{
+    const resp=await fetch('/api/diagnose',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({resume,target})
+    });
+    const j=await resp.json();
+    if(j.code!==0) throw new Error(j.message||'诊断失败');
+    render(j.data,target);
+  }catch(e){
+    render(getDemoReport(resume,target),target);
+    showToast('诊断服务暂不可用，已切到演示模式');
+  }
+}
+
+function scoreColor(s){ return s>=75?'var(--green)':s>=55?'var(--amber)':'var(--red)'; }
+
+function render(d,target){
+  lastReport=d;
+  $('loading').style.display='none';
+  $('result').style.display='block';
+  const sc=d.overall_score||0;
+  const ring=$('ring');
+  ring.style.setProperty('--rc',scoreColor(sc));
+  $('ringScore').innerHTML=sc+'<small>分</small>';
+  // 环形动画
+  let cur=0; const step=Math.max(1,Math.round(sc/30));
+  const timer=setInterval(()=>{ cur=Math.min(sc,cur+step); ring.style.setProperty('--p',cur); $('ringScore').innerHTML=cur+'<small>分</small>'; if(cur>=sc)clearInterval(timer); },20);
+  $('verdict').textContent=d.one_line_verdict||'';
+
+  const dims=$('dims'); dims.innerHTML='';
+  (d.dimensions||[]).forEach(dm=>{
+    const c=scoreColor(dm.score);
+    const el=document.createElement('div');
+    el.className='dim';
+    el.innerHTML='<div class="dim-top"><span class="dim-name">'+dm.name+'</span><span class="dim-score" style="color:'+c+'">'+dm.score+'</span></div>'+
+      '<div class="dim-bar"><i style="width:'+dm.score+'%;background:'+c+'"></i></div>'+
+      '<div class="dim-cmt">'+dm.comment+'</div>';
+    dims.appendChild(el);
+  });
+
+  const fatal=$('fatal'); fatal.innerHTML='';
+  (d.fatal_issues||[]).forEach(t=>{const r=document.createElement('div');r.className='row';r.innerHTML='<span class="mk">✕</span><span>'+t+'</span>';fatal.appendChild(r);});
+
+  const rw=$('rewrites'); rw.innerHTML='';
+  (d.rewrites||[]).forEach(it=>{
+    const el=document.createElement('div');el.className='rw-item';
+    el.innerHTML='<div class="rw-before"><span class="tag">改前</span>'+(it.before||'')+'</div>'+
+      '<div class="rw-after"><span class="tag">改后</span>'+(it.after||'')+'</div>';
+    rw.appendChild(el);
+  });
+
+  if(d.match&&d.match.has_target){
+    $('matchSec').style.display='block';
+    $('matchScore').textContent=(d.match.score!=null?d.match.score+'%':'—');
+    const miss=$('miss'); miss.innerHTML='';
+    (d.match.missing||[]).forEach(m=>{const s=document.createElement('span');s.textContent=m;miss.appendChild(s);});
+    if(!(d.match.missing||[]).length){ miss.innerHTML='<span style="color:var(--green);background:rgba(61,220,151,.1);border-color:rgba(61,220,151,.3)">关键词覆盖得不错 👍</span>'; }
+  }else{ $('matchSec').style.display='none'; }
+
+  const qw=$('quickwins'); qw.innerHTML='';
+  (d.quick_wins||[]).forEach(t=>{const r=document.createElement('div');r.className='row';r.innerHTML='<span class="mk">✓</span><span>'+t+'</span>';qw.appendChild(r);});
+  window.scrollTo(0,0);
+}
+
+function copyReport(){
+  if(!lastReport)return;
+  const d=lastReport;
+  let t='【AI 简历诊断报告】\n初筛评分：'+d.overall_score+'/100\n总评：'+d.one_line_verdict+'\n\n各维度：\n';
+  (d.dimensions||[]).forEach(dm=>{ t+='· '+dm.name+' '+dm.score+'分 — '+dm.comment+'\n'; });
+  t+='\n致命伤：\n'; (d.fatal_issues||[]).forEach((x,i)=>{ t+=(i+1)+'. '+x+'\n'; });
+  t+='\n改写对照：\n'; (d.rewrites||[]).forEach(r=>{ t+='改前：'+r.before+'\n改后：'+r.after+'\n\n'; });
+  t+='今天就能改：\n'; (d.quick_wins||[]).forEach(x=>{ t+='· '+x+'\n'; });
+  t+='\n—— AI 简历诊断器 by Harry · AI 产品手艺人';
+  navigator.clipboard.writeText(t).then(showToast).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast();}catch(e){}document.body.removeChild(ta);
+  });
+}
+function showToast(msg='已复制'){
+  const el=$('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),1800);
+}
+function restart(){ $('result').style.display='none'; $('err').style.display='none'; $('hero').style.display='block'; window.scrollTo(0,0); }
+</script>
+</body>
+</html>
